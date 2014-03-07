@@ -46,7 +46,7 @@ end
 
 group :development, :test do
   gem 'sqlite3'
-  gem 'rspec'
+  gem 'rspec-rails'
   gem 'guard-rspec', require: false
   gem 'factory_girl_rails'
 end
