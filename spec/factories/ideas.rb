@@ -3,13 +3,14 @@
 FactoryGirl.define do
   factory :idea do
     sequence(:body) { |n| "body#{n}" }
-    idea_category
+    trade
 
     factory :valid_idea do
       body 'body'
     end
     factory :invalid_idea do
       body ''
+      trade nil
     end
   end
 end

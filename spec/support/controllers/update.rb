@@ -7,7 +7,7 @@ shared_examples 'controllers/update' do |resource, model|
   describe '#update' do
     context 'valid' do
       let(:record) { FactoryGirl.create valid_resource }
-      let(:params)  { {id: record.id, resource => FactoryGirl.attributes_for(resource)} }
+      let(:params)  { {id: record.id, resource => get_record_attributes(FactoryGirl.build(valid_resource))} }
 
       it do
         put :update, params, format: :json
@@ -15,19 +15,14 @@ shared_examples 'controllers/update' do |resource, model|
         expect(response.status).to eq(200)
         expect(response.body).to eq(model.first.to_json)
 
-        as = {}
-        model.first.attributes.each do |k, v|
-          as[k.to_sym] = v unless k == 'id' or k == 'created_at' or k == 'updated_at'
-        end
-
-        expect(params).to eq({id: record.id, resource => as})
+        expect({id: model.first.id, resource => get_record_attributes(model.first)}).to eq(params)
       end
     end
     context 'invalid' do
       context 'exists' do
         let(:record) { FactoryGirl.create resource }
         let(:invalid_record) { FactoryGirl.build_stubbed(invalid_resource) }
-        let(:params) { {id: record.id, resource => FactoryGirl.attributes_for(invalid_resource)} }
+        let(:params) { {id: record.id, resource => get_record_attributes(FactoryGirl.build(invalid_resource))} }
 
         it do
           put :update, params, format: :json
@@ -38,8 +33,7 @@ shared_examples 'controllers/update' do |resource, model|
         end
       end
       context 'does not exist' do
-        let(:stubbed_record) { FactoryGirl.build_stubbed(resource) }
-        let(:params) { {id: stubbed_record.id, resource => FactoryGirl.attributes_for(resource)} }
+        let(:params) { {id: 99, resource => FactoryGirl.attributes_for(resource)} }
 
         it do
           -> { put :update, params, format: :json }.should raise_error ActiveRecord::RecordNotFound

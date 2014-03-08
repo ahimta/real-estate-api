@@ -12,8 +12,15 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
-module ApiHelpers
-
+module MyHelpers
+  def get_record_attributes(record)
+    h = {}
+    record.attributes.each { |k,v| h[k.to_sym] = v }
+    h.delete :id
+    h.delete :created_at
+    h.delete :updated_at
+    h
+  end
 end
 
 RSpec.configure do |config|
@@ -43,4 +50,7 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+
+
+  config.include MyHelpers
 end

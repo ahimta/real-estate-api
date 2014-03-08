@@ -7,7 +7,7 @@ shared_examples 'controllers/create' do |resource, model|
     before { post :create, params, format: :json }
 
     context 'valid' do
-      let(:params)  { {resource => FactoryGirl.attributes_for(valid_resource)} }
+      let(:params)  { {resource => get_record_attributes(FactoryGirl.build(valid_resource))} }
 
       it do
         expect(response.status.should).to eq(201)
@@ -20,12 +20,12 @@ shared_examples 'controllers/create' do |resource, model|
         as.delete :updated_at
 
         expect(model.count).to eq(1)
-        expect(params).to eq({resource => as})
+        expect({resource => get_record_attributes(model.first)}).to eq(params)
       end
     end
     context 'invalid' do
       let(:record) { FactoryGirl.build invalid_resource }
-      let(:params)  { {resource => FactoryGirl.attributes_for(invalid_resource)} }
+      let(:params)  { {resource => get_record_attributes(FactoryGirl.build(invalid_resource))} }
 
       it do
         expect(response.status).to eq(400)
