@@ -13,5 +13,11 @@ FactoryGirl.define do
       name ''
       description 'description'
     end
+
+    factory :trade_with_ideas do
+      after(:create) do |trade, evaluator|
+        create_list(:idea, 7, trade: trade)
+      end
+    end
   end
 end
