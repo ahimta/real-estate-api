@@ -49,6 +49,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'guard-rspec', require: false
   gem 'factory_girl_rails'
+  gem 'railroady'
 end
 
 group :production do
