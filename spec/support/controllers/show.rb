@@ -3,7 +3,7 @@ require 'spec_helper'
 shared_examples 'controllers/show' do |resource|
   describe '#show' do
     context 'exists' do
-      let!(:record) { FactoryGirl.create resource }
+      let(:record) { FactoryGirl.create resource }
 
       it do
         get :show, id: record.id

@@ -33,7 +33,7 @@ shared_examples 'controllers/update' do |resource, model|
         end
       end
       context 'does not exist' do
-        let(:params) { {id: 99, resource => FactoryGirl.attributes_for(resource)} }
+        let(:params) { {id: 99, resource => get_record_attributes(FactoryGirl.build(resource))} }
 
         it do
           -> { put :update, params, format: :json }.should raise_error ActiveRecord::RecordNotFound

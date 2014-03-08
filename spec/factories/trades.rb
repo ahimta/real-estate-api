@@ -11,6 +11,7 @@ FactoryGirl.define do
     end
     factory :invalid_trade do
       name ''
+      description 'description'
     end
   end
 end

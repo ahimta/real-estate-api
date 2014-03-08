@@ -10,14 +10,8 @@ shared_examples 'controllers/create' do |resource, model|
       let(:params)  { {resource => get_record_attributes(FactoryGirl.build(valid_resource))} }
 
       it do
-        expect(response.status.should).to eq(201)
+        expect(response.status).to eq(201)
         expect(response.body).to eq(model.first.to_json)
-
-        as = {}
-        model.first.attributes.each { |k,v| as[k.to_sym] = v }
-        as.delete :id
-        as.delete :created_at
-        as.delete :updated_at
 
         expect(model.count).to eq(1)
         expect({resource => get_record_attributes(model.first)}).to eq(params)
@@ -25,14 +19,14 @@ shared_examples 'controllers/create' do |resource, model|
     end
     context 'invalid' do
       let(:record) { FactoryGirl.build invalid_resource }
-      let(:params)  { {resource => get_record_attributes(FactoryGirl.build(invalid_resource))} }
+      let(:params)  { {resource => get_record_attributes(record)} }
 
       it do
         expect(response.status).to eq(400)
         record.valid?
         expect(response.body).to eq(record.errors.to_json)
 
-        model.count.should == 0
+        expect(model.count).to eq(0)
       end
     end
   end

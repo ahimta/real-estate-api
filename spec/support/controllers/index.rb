@@ -2,7 +2,6 @@ require 'spec_helper'
 
 shared_examples 'controllers/index' do |resource|
   describe '#index' do
-    let(:count) { 7 }
     let!(:records) { FactoryGirl.create_list resource, 7 }
 
     it do
