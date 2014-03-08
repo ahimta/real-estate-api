@@ -7,7 +7,7 @@ shared_examples 'controllers/update' do |resource, model|
   describe '#update' do
     context 'valid' do
       let(:record) { FactoryGirl.create valid_resource }
-      let(:params)  { {id: record.id, idea_category: FactoryGirl.attributes_for(resource)} }
+      let(:params)  { {id: record.id, resource => FactoryGirl.attributes_for(resource)} }
 
       it do
         put :update, params, format: :json
@@ -27,7 +27,7 @@ shared_examples 'controllers/update' do |resource, model|
       context 'exists' do
         let(:record) { FactoryGirl.create resource }
         let(:invalid_record) { FactoryGirl.build_stubbed(invalid_resource) }
-        let(:params) { {id: record.id, idea_category: FactoryGirl.attributes_for(invalid_resource)} }
+        let(:params) { {id: record.id, resource => FactoryGirl.attributes_for(invalid_resource)} }
 
         it do
           put :update, params, format: :json
@@ -39,7 +39,7 @@ shared_examples 'controllers/update' do |resource, model|
       end
       context 'does not exist' do
         let(:stubbed_record) { FactoryGirl.build_stubbed(resource) }
-        let(:params) { {id: stubbed_record.id, idea_category: FactoryGirl.attributes_for(resource)} }
+        let(:params) { {id: stubbed_record.id, resource => FactoryGirl.attributes_for(resource)} }
 
         it do
           -> { put :update, params, format: :json }.should raise_error ActiveRecord::RecordNotFound

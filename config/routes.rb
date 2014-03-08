@@ -1,7 +1,7 @@
 RealEState::Application.routes.draw do
   resources :ideas, only: [:index, :show, :create, :update, :destroy], defaults: { format: :json }
 
-  resources :idea_categories, only: [:index, :show, :create, :update, :destroy], defaults: { format: :json }
+  resources :trades, only: [:index, :show, :create, :update, :destroy], defaults: { format: :json }
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

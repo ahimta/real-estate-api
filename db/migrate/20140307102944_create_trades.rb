@@ -1,6 +1,6 @@
-class CreateIdeaCategories < ActiveRecord::Migration
+class CreateTrades < ActiveRecord::Migration
   def change
-    create_table :idea_categories do |t|
+    create_table :trades do |t|
       t.string :name
       t.text :description
 

@@ -13,20 +13,20 @@
 
 ActiveRecord::Schema.define(version: 20140307110126) do
 
-  create_table "idea_categories", force: true do |t|
+  create_table "ideas", force: true do |t|
+    t.text     "body"
+    t.integer  "trade_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "ideas", ["trade_id"], name: "index_ideas_on_trade_id"
+
+  create_table "trades", force: true do |t|
     t.string   "name"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "ideas", force: true do |t|
-    t.text     "body"
-    t.integer  "idea_category_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "ideas", ["idea_category_id"], name: "index_ideas_on_idea_category_id"
 
 end

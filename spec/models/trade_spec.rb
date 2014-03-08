@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe IdeaCategory do
+describe Trade do
 
 end

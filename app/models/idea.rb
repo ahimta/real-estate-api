@@ -1,4 +1,4 @@
 class Idea < ActiveRecord::Base
-  belongs_to :idea_category, touch: true
+  belongs_to :trade, touch: true
   validates :text, presence: true
 end

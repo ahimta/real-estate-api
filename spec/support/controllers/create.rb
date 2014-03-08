@@ -25,7 +25,7 @@ shared_examples 'controllers/create' do |resource, model|
     end
     context 'invalid' do
       let(:record) { FactoryGirl.build invalid_resource }
-      let(:params)  { {idea_category: FactoryGirl.attributes_for(invalid_resource)} }
+      let(:params)  { {resource => FactoryGirl.attributes_for(invalid_resource)} }
 
       it do
         expect(response.status).to eq(400)
