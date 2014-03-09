@@ -25,5 +25,12 @@ module RealEState
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :en
     I18n.enforce_available_locales = true
+
+    config.middleware.use Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', headers: :any, methods: [:get, :post, :delete, :put, :options]
+      end
+    end
   end
 end

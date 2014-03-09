@@ -53,3 +53,4 @@ group :production do
 end
 
 gem 'rails-i18n'
+gem 'rack-cors', require: 'rack/cors'
