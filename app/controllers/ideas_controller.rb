@@ -1,7 +1,7 @@
 class IdeasController < ApplicationController
 
   def index
-    render json: Idea.includes(:trade).all, status: 200
+    render json: Idea.includes(:trade), status: 200
   end
 
   def show
