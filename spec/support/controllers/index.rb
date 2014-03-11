@@ -6,7 +6,6 @@ shared_examples 'controllers/index' do |resource|
 
     it do
       get :index
-
       expect(response.status).to eq(200)
       expect(response.body).to eq(records.to_json)
     end
