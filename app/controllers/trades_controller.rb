@@ -1,7 +1,7 @@
 class TradesController < ApplicationController
 
   def index
-    render json: Trade.all, status: 200
+    render json: Trade.includes(:ideas).all, status: 200
   end
 
   def show
@@ -40,6 +40,6 @@ class TradesController < ApplicationController
   end
 
   def get_trade
-    Trade.find params[:id]
+    Trade.includes(:ideas).find params[:id]
   end
 end

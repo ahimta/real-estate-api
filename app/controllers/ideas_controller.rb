@@ -1,7 +1,7 @@
 class IdeasController < ApplicationController
 
   def index
-    render json: Idea.all, status: 200
+    render json: Idea.includes(:trade).all, status: 200
   end
 
   def show
@@ -41,6 +41,6 @@ class IdeasController < ApplicationController
   end
 
   def get_idea
-    Idea.find params[:id]
+    Idea.includes(:trade).find params[:id]
   end
 end
