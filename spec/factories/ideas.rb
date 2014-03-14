@@ -10,6 +10,9 @@ FactoryGirl.define do
     end
     factory :invalid_idea do
       body ''
+    end
+    factory :invalid_idea_without_trade do
+      body ''
       trade nil
     end
   end

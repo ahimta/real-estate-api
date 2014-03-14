@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20140307110126) do
   create_table "trades", force: true do |t|
     t.string   "name"
     t.text     "description"
-    t.integer  "ideas_count"
+    t.integer  "ideas_count", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

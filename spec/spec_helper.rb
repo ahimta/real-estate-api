@@ -15,11 +15,14 @@ ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 module MyHelpers
   def get_record_attributes(record)
     h = {}
-    record.attributes.each { |k,v| h[k.to_sym] = v }
-    h.delete :id
-    h.delete :created_at
-    h.delete :updated_at
+    record.attributes.each { |k,v| h[k.to_s] = v }
+    h.delete 'created_at'
+    h.delete 'updated_at'
     h
+  end
+
+  def json_response
+    @json_response ||= JSON.parse response.body
   end
 end
 
