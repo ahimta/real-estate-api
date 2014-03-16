@@ -14,8 +14,8 @@
 ActiveRecord::Schema.define(version: 20140307110126) do
 
   create_table "ideas", force: true do |t|
-    t.text     "body"
-    t.integer  "trade_id"
+    t.text     "body",       null: false
+    t.integer  "trade_id",   null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20140307110126) do
   add_index "ideas", ["trade_id"], name: "index_ideas_on_trade_id"
 
   create_table "trades", force: true do |t|
-    t.string   "name"
+    t.string   "name",                    null: false
     t.text     "description"
     t.integer  "ideas_count", default: 0
     t.datetime "created_at"
