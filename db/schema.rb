@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140307110126) do
+ActiveRecord::Schema.define(version: 20140320122148) do
 
   create_table "ideas", force: true do |t|
     t.text     "body",       null: false
@@ -22,10 +22,26 @@ ActiveRecord::Schema.define(version: 20140307110126) do
 
   add_index "ideas", ["trade_id"], name: "index_ideas_on_trade_id"
 
+  create_table "shops", force: true do |t|
+    t.string   "name",         null: false
+    t.string   "phone"
+    t.integer  "lower_price"
+    t.integer  "higher_price"
+    t.integer  "rating"
+    t.string   "type"
+    t.text     "notes"
+    t.integer  "trade_id",     null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "shops", ["trade_id"], name: "index_shops_on_trade_id"
+
   create_table "trades", force: true do |t|
     t.string   "name",                    null: false
     t.text     "description"
     t.integer  "ideas_count", default: 0
+    t.integer  "shops_count", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

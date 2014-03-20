@@ -1,6 +1,5 @@
 class TradeSerializer < ActiveModel::Serializer
-  self.root = false
-
-  attributes :id, :name, :description, :ideas_count
+  attributes :id, :name, :description, :ideas_count, :shops_count
   has_many :ideas
+  has_many :shops
 end

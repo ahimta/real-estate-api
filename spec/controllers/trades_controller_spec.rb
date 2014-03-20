@@ -8,7 +8,7 @@ describe TradesController do
       let(:expected_records) {
         records.map do |record|
           {'id' => record.id, 'name' => record.name, 'description' => record.description,
-            'ideas_count' => 0, 'ideas' => []}
+            'ideas_count' => 0, 'shops_count' => 0, 'ideas' => [], 'shops' => []}
         end
       }
       let!(:records) { FactoryGirl.create_list :trade, 7 }
@@ -24,8 +24,9 @@ describe TradesController do
       let!(:records) { FactoryGirl.create_list :trade_with_ideas, 7 }
       let(:expected_records) {
         records.map do |record|
-          {'id' => record.id, 'name' => record.name, 'description' => record.description,
-            'ideas_count' => 7, 'ideas' => record.ideas.map { |idea| get_record_attributes(idea) }}
+          {'id' => record.id,'name'=>record.name,'description'=>record.description,
+            'ideas_count'=>7,'shops_count'=>0,
+            'ideas'=>record.ideas.map { |idea| get_record_attributes(idea) },'shops'=>[]}
         end
       }
 
@@ -49,7 +50,7 @@ describe TradesController do
         let!(:records) { FactoryGirl.create_list :trade_with_ideas, count }
         let(:expected_record) {
           {'id' => record.id, 'name' => record.name, 'description' => record.description,
-            'ideas_count' => count, 'ideas' => record.ideas.map { |idea| get_record_attributes(idea) }}
+            'ideas_count'=>count,'shops_count'=>0,'shops'=>[],'ideas' => record.ideas.map { |idea| get_record_attributes(idea) }}
         }
 
         it do
@@ -62,8 +63,8 @@ describe TradesController do
       context 'with no ideas' do
         let!(:records) { FactoryGirl.create_list :trade, count }
         let(:expected_record) {
-          {'id' => record.id, 'name' => record.name, 'description' => record.description,
-            'ideas_count' => 0, 'ideas' => [] }
+          {'id' => record.id,'name'=>record.name,'description'=>record.description,
+            'ideas_count'=>0,'shops_count'=>0,'ideas'=>[],'shops'=>[]}
         }
 
         it do
@@ -86,7 +87,7 @@ describe TradesController do
       let(:params) { {trade: {name: 'name', description: 'description'}} }
       let(:record) { Trade.first }
       let(:expected_record) {
-        {'id'=>record.id,'name'=>'name','description'=>'description','ideas_count'=>0,'ideas'=>[]}
+        {'id'=>record.id,'name'=>'name','description'=>'description','ideas_count'=>0,'shops_count'=>0,'ideas'=>[],'shops'=>[]}
       }
 
       it do
@@ -130,7 +131,8 @@ describe TradesController do
       context 'valid' do
         let(:params) { {'id'=>id,'trade'=>{'name'=>'name','description'=>'description'}} }
         let(:expected) {
-          {'id'=>id,'name'=>'name','description'=>'description','ideas_count'=>0,'ideas'=>[]}
+          {'id'=>id,'name'=>'name','description'=>'description','ideas_count'=>0,'shops_count'=>0,
+            'ideas'=>[],'shops'=>[]}
         }
         it do
           count = Trade.count
@@ -169,8 +171,8 @@ describe TradesController do
 
   describe '#destroy' do
     context 'exists' do
-      let(:expected_record) { {'id' => record.id, 'name' => record.name,
-          'description' => record.description, 'ideas_count' => 0, 'ideas' => []} }
+      let(:expected_record) {{'id'=>record.id,'name'=>record.name,'description'=>record.description,
+        'ideas_count'=>0,'shops_count'=>0,'ideas'=>[],'shops'=>[]}}
       let(:destroy) { delete :destroy, id: record.id, format: :json }
 
       context 'with no ideas' do

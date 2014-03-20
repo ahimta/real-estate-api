@@ -4,6 +4,7 @@ class CreateTrades < ActiveRecord::Migration
       t.string :name, null: false
       t.text :description
       t.integer :ideas_count, default: 0
+      t.integer :shops_count, default: 0
 
       t.timestamps
     end

@@ -1,4 +1,6 @@
 RealEState::Application.routes.draw do
+  resources :shops, only: [:index, :show, :create, :update, :destroy], defaults: { format: :json }
+
   resources :ideas, only: [:index, :show, :create, :update, :destroy], defaults: { format: :json }
 
   resources :trades, only: [:index, :show, :create, :update, :destroy], defaults: { format: :json }
