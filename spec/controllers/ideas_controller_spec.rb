@@ -27,18 +27,16 @@ describe IdeasController do
       let(:record) { Idea.find id }
       let(:show) { get :show, id: id, format: :json }
 
-      context 'with ideas' do
-        let!(:records) { FactoryGirl.create_list :idea, 7 }
-        let(:expected_record) {
-          {'id' => record.id, 'body' => record.body, 'trade_id' => record.trade_id}
-        }
+      let!(:records) { FactoryGirl.create_list :idea, 7 }
+      let(:expected_record) {
+        {'id' => record.id, 'body' => record.body, 'trade_id' => record.trade_id}
+      }
 
-        it do
-          show
+      it do
+        show
 
-          expect(json_response).to eq(expected_record)
-          expect(response.status).to eq(200)
-        end
+        expect(json_response).to eq(expected_record)
+        expect(response.status).to eq(200)
       end
     end
     context 'does not exist' do
@@ -105,7 +103,7 @@ describe IdeasController do
           expect(Idea.count).to be_zero
         end
       end
-      pending 'with non-existing trade_id' do
+      context 'with non-existing trade_id' do
         let(:params) { {idea: {body: 'body', trade_id: 99}} }
 
         it do
@@ -192,7 +190,7 @@ describe IdeasController do
           record.errors.to_json
         }
 
-        pending 'with non-existing trade_id' do
+        context 'with non-existing trade_id' do
           let(:params) { {id: record.id, idea: {body: 'body', trade_id: 99}} }
 
           it do

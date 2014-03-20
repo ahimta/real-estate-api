@@ -6,7 +6,7 @@ class CreateShops < ActiveRecord::Migration
       t.integer :lower_price
       t.integer :higher_price
       t.integer :rating
-      t.string :type
+      t.string :material_type
       t.text :notes
       t.belongs_to :trade, null: false, index: true
 
