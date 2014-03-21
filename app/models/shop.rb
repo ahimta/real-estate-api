@@ -1,7 +1,6 @@
 class Shop < ActiveRecord::Base
-  belongs_to :trade, touch: true, counter_cache: true
+  include Tradable
 
-  validates :name, :trade_id, presence: true
-  validates :trade_id, inclusion: { in: ->(shop) {Trade.ids} }
+  validates :name, presence: true
   validates :rating, numericality: { only_integer: true, greater_than: -1, less_than: 6 }
 end
