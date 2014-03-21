@@ -1,6 +1,6 @@
 class Shop < ActiveRecord::Base
+  include Acquaintanceable
   include Tradable
 
-  validates :name, presence: true
-  validates :rating, numericality: { only_integer: true, greater_than: -1, less_than: 6 }
+  has_many :workers, dependent: :destroy
 end
