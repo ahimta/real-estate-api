@@ -1,55 +1,23 @@
 require 'spec_helper'
 
 describe ShopsController do
-  describe '#index' do
-    let(:index) { get :index }
+  let!(:attributes) {
+    [:id,:name,:phone,:lower_price,:higher_price,:rating,:material_type,:notes,:trade_id]
+  }
 
-    context 'exist' do
-      let(:expected_records) {
-        records.map do |record|
-          {'id'=>record.id,'name' =>record.name,'phone'=>record.phone,
-            'lower_price'=>record.lower_price,'higher_price'=>record.higher_price,
-            'rating'=>record.rating,'material_type'=>record.material_type,'notes'=>record.notes,
-            'trade_id' => record.trade_id}
-        end
-      }
-      let!(:records) { FactoryGirl.create_list :shop, 7 }
-
-      it do
-        index
-
-        expect(json_response).to eq(expected_records)
-        expect(response.status).to eq(200)
-      end
-    end
+  it_behaves_like 'controllers/index' do
+    let(:resource) { :shop }
+    let(:model) { Shop }
   end
 
-  describe '#show' do
-    context 'exists' do
-      let(:id) { Shop.last.id }
-      let(:record) { Shop.find id }
-      let(:show) { get :show, id: id, format: :json }
+  it_behaves_like 'controllers/show' do
+    let(:resource) { :shop }
+    let(:model) { Shop }
+  end
 
-      let!(:records) { FactoryGirl.create_list :shop, 7 }
-      let(:expected_record) {
-        {'id'=>record.id,'name'=>record.name,'phone'=>record.phone,
-          'lower_price'=>record.lower_price,'higher_price'=>record.higher_price,
-          'rating'=>record.rating,'material_type'=>record.material_type,'notes'=>record.notes,
-          'trade_id' => record.trade_id}
-      }
-
-      it do
-        show
-
-        expect(json_response).to eq(expected_record)
-        expect(response.status).to eq(200)
-      end
-    end
-    context 'does not exist' do
-      let(:show) { get :show, id: 99, format: :json }
-
-      it {expect(-> { show }).to raise_error(ActiveRecord::RecordNotFound)}
-    end
+  it_behaves_like 'controllers/destroy' do
+    let(:resource) { :shop }
+    let(:model) { Shop }
   end
 
   describe '#create' do
@@ -234,38 +202,6 @@ describe ShopsController do
             expect(Shop.count).to eq(1)
           end
         end
-      end
-    end
-  end
-
-  describe '#destroy' do
-    context 'exists' do
-      let(:expected_record) {
-        {'id'=>record.id,'name'=>record.name,'phone'=>record.phone,
-          'lower_price'=>record.lower_price,'higher_price'=>record.higher_price,
-          'rating'=>record.rating,'material_type'=>record.material_type,'notes'=>record.notes,
-          'trade_id'=>record.trade_id}
-      }
-      let!(:record) { FactoryGirl.create :shop }
-      let(:destroy) { delete :destroy, id: record.id, format: :json }
-
-      it do
-        expect(Trade.count).to eq(1)
-        expect(Shop.count).to eq(1)
-
-        destroy
-
-        expect(json_response).to eq(expected_record)
-        expect(response.status).to eq(200)
-
-        expect(Trade.count).to eq(1)
-        expect(Shop.count).to be_zero
-      end
-    end
-    context 'does not exist' do
-      it do
-        expect(-> { delete :destroy, id: 99, format: :json }).
-          to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end

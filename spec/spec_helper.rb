@@ -21,6 +21,12 @@ module MyHelpers
     h
   end
 
+  def get_record_attrs(record, attrs)
+    hash = {}
+    attrs.each { |attr| hash[attr.to_s] = record.send(attr) }
+    hash
+  end
+
   def json_response
     @json_response ||= JSON.parse response.body
   end

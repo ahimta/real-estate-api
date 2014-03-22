@@ -1,49 +1,21 @@
 require 'spec_helper'
 
 describe IdeasController do
-  describe '#index' do
-    let(:index) { get :index }
+  let!(:attributes) { [:id,:body,:trade_id] }
 
-    context 'exist' do
-      let(:expected_records) {
-        records.map do |record|
-          {'id' => record.id, 'body' => record.body, 'trade_id' => record.trade_id}
-        end
-      }
-      let!(:records) { FactoryGirl.create_list :idea, 7 }
-
-      it do
-        index
-
-        expect(json_response).to eq(expected_records)
-        expect(response.status).to eq(200)
-      end
-    end
+  it_behaves_like 'controllers/index' do
+    let(:resource) { :idea }
+    let(:model) { Idea }
   end
 
-  describe '#show' do
-    context 'exists' do
-      let(:id) { Idea.last.id }
-      let(:record) { Idea.find id }
-      let(:show) { get :show, id: id, format: :json }
+  it_behaves_like 'controllers/show' do
+    let(:resource) { :idea }
+    let(:model) { Idea }
+  end
 
-      let!(:records) { FactoryGirl.create_list :idea, 7 }
-      let(:expected_record) {
-        {'id' => record.id, 'body' => record.body, 'trade_id' => record.trade_id}
-      }
-
-      it do
-        show
-
-        expect(json_response).to eq(expected_record)
-        expect(response.status).to eq(200)
-      end
-    end
-    context 'does not exist' do
-      let(:show) { get :show, id: 99, format: :json }
-
-      it {expect(-> { show }).to raise_error(ActiveRecord::RecordNotFound)}
-    end
+  it_behaves_like 'controllers/destroy' do
+    let(:resource) { :idea }
+    let(:model) { Idea }
   end
 
   describe '#create' do
@@ -203,33 +175,6 @@ describe IdeasController do
             expect(Idea.count).to eq(1)
           end
         end
-      end
-    end
-  end
-
-  describe '#destroy' do
-    context 'exists' do
-      let(:expected_record) { {'id'=>record.id,'body'=>record.body,'trade_id'=>record.trade_id} }
-      let!(:record) { FactoryGirl.create :idea }
-      let(:destroy) { delete :destroy, id: record.id, format: :json }
-
-      it do
-        expect(Trade.count).to eq(1)
-        expect(Idea.count).to eq(1)
-
-        destroy
-
-        expect(json_response).to eq(expected_record)
-        expect(response.status).to eq(200)
-
-        expect(Trade.count).to eq(1)
-        expect(Idea.count).to be_zero
-      end
-    end
-    context 'does not exist' do
-      it do
-        expect(-> { delete :destroy, id: 99, format: :json }).
-          to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end

@@ -1,83 +1,21 @@
 require 'spec_helper'
 
 describe TradesController do
-  describe '#index' do
-    let(:index) { get :index, format: :json }
+  let!(:attributes) { [:id,:name,:description,:shops_count,:ideas_count,:ideas,:shops] }
 
-    context 'without ideas' do
-      let(:expected_records) {
-        records.map do |record|
-          {'id' => record.id, 'name' => record.name, 'description' => record.description,
-            'ideas_count' => 0, 'shops_count' => 0, 'ideas' => [], 'shops' => []}
-        end
-      }
-      let!(:records) { FactoryGirl.create_list :trade, 7 }
-
-      it do
-        index
-
-        expect(json_response).to eq(expected_records)
-        expect(response.status).to eq(200)
-      end
-    end
-    context 'with ideas' do
-      let!(:records) { FactoryGirl.create_list :trade_with_ideas, 7 }
-      let(:expected_records) {
-        records.map do |record|
-          {'id' => record.id,'name'=>record.name,'description'=>record.description,
-            'ideas_count'=>7,'shops_count'=>0,
-            'ideas'=>record.ideas.map { |idea| get_record_attributes(idea) },'shops'=>[]}
-        end
-      }
-
-      it do
-        index
-
-        expect(json_response).to eq(expected_records)
-        expect(response.status).to eq(200)
-      end
-    end
+  it_behaves_like 'controllers/index' do
+    let(:resource) { :trade }
+    let(:model) { Trade }
   end
 
-  describe '#show' do
-    context 'exists' do
-      let(:count) { 7 }
-      let(:id) { Trade.last.id }
-      let(:record) { Trade.find id }
-      let(:show) { get :show, id: id, format: :json }
+  it_behaves_like 'controllers/show' do
+    let(:resource) { :trade }
+    let(:model) { Trade }
+  end
 
-      context 'with ideas' do
-        let!(:records) { FactoryGirl.create_list :trade_with_ideas, count }
-        let(:expected_record) {
-          {'id' => record.id, 'name' => record.name, 'description' => record.description,
-            'ideas_count'=>count,'shops_count'=>0,'shops'=>[],'ideas' => record.ideas.map { |idea| get_record_attributes(idea) }}
-        }
-
-        it do
-          show
-
-          expect(json_response).to eq(expected_record)
-          expect(response.status).to eq(200)
-        end
-      end
-      context 'with no ideas' do
-        let!(:records) { FactoryGirl.create_list :trade, count }
-        let(:expected_record) {
-          {'id' => record.id,'name'=>record.name,'description'=>record.description,
-            'ideas_count'=>0,'shops_count'=>0,'ideas'=>[],'shops'=>[]}
-        }
-
-        it do
-          show
-
-          expect(json_response).to eq(expected_record)
-          expect(response.status).to eq(200)
-        end
-      end
-    end
-    context 'does not exist' do
-      it {expect(-> {get :show,id:99,format: :json }).to raise_error(ActiveRecord::RecordNotFound)}
-    end
+  it_behaves_like 'controllers/destroy' do
+    let(:resource) { :trade }
+    let(:model) { Trade }
   end
 
   describe '#create' do
@@ -166,48 +104,6 @@ describe TradesController do
       let(:params) { {id: 99, trade:{name: 'name', description: 'description'}} }
 
       it { expect(-> { update }).to raise_error(ActiveRecord::RecordNotFound) }
-    end
-  end
-
-  describe '#destroy' do
-    context 'exists' do
-      let(:expected_record) {{'id'=>record.id,'name'=>record.name,'description'=>record.description,
-        'ideas_count'=>0,'shops_count'=>0,'ideas'=>[],'shops'=>[]}}
-      let(:destroy) { delete :destroy, id: record.id, format: :json }
-
-      context 'with no ideas' do
-        let!(:record) { FactoryGirl.create :trade }
-
-        it do
-          expect(Trade.count).to eq(1)
-
-          destroy
-
-          expect(json_response).to eq(expected_record)
-          expect(response.status).to eq(200)
-          expect(Trade.count).to be_zero
-        end
-      end
-      context 'with ideas' do
-        let!(:record) { FactoryGirl.create :trade_with_ideas }
-
-        it do
-          expect(Trade.count).to eq(1)
-          expect(Idea.count).to be > 1
-
-          destroy
-
-          expect(response.status).to eq(200)
-          expect(Trade.count).to be_zero
-          expect(Idea.count).to be_zero
-        end
-      end
-    end
-    context 'does not exist' do
-      it do
-        expect(-> { delete :destroy, id: 99, format: :json }).
-          to raise_error(ActiveRecord::RecordNotFound)
-      end
     end
   end
 end
