@@ -1,17 +1,15 @@
-class CreateShops < ActiveRecord::Migration
+class CreateMaterials < ActiveRecord::Migration
   def change
-    create_table :shops do |t|
+    create_table :materials do |t|
       t.string :name, null: false
 
-      t.string :phone
+      t.string :material_type
       t.integer :lower_price
       t.integer :higher_price
       t.integer :rating
       t.text :notes
 
-      t.integer :workers_count, default: 0
-      t.integer :materials_count, default: 0
-
+      t.belongs_to :shop, index: true, null: false
       t.belongs_to :trade, index: true, null: false
 
       t.timestamps

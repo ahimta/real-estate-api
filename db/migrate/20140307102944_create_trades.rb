@@ -6,6 +6,7 @@ class CreateTrades < ActiveRecord::Migration
       t.integer :ideas_count, default: 0
       t.integer :shops_count, default: 0
       t.integer :workers_count, default: 0
+      t.integer :materials_count, default: 0
 
       t.timestamps
     end

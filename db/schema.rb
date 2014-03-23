@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140321001149) do
+ActiveRecord::Schema.define(version: 20140323142039) do
 
   create_table "ideas", force: true do |t|
     t.text     "body",       null: false
@@ -22,15 +22,32 @@ ActiveRecord::Schema.define(version: 20140321001149) do
 
   add_index "ideas", ["trade_id"], name: "index_ideas_on_trade_id"
 
+  create_table "materials", force: true do |t|
+    t.string   "name",          null: false
+    t.string   "material_type"
+    t.integer  "lower_price"
+    t.integer  "higher_price"
+    t.integer  "rating"
+    t.text     "notes"
+    t.integer  "shop_id",       null: false
+    t.integer  "trade_id",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "materials", ["shop_id"], name: "index_materials_on_shop_id"
+  add_index "materials", ["trade_id"], name: "index_materials_on_trade_id"
+
   create_table "shops", force: true do |t|
-    t.string   "name",                      null: false
+    t.string   "name",                        null: false
     t.string   "phone"
     t.integer  "lower_price"
     t.integer  "higher_price"
     t.integer  "rating"
     t.text     "notes"
-    t.integer  "workers_count", default: 0
-    t.integer  "trade_id",                  null: false
+    t.integer  "workers_count",   default: 0
+    t.integer  "materials_count", default: 0
+    t.integer  "trade_id",                    null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -38,10 +55,11 @@ ActiveRecord::Schema.define(version: 20140321001149) do
   add_index "shops", ["trade_id"], name: "index_shops_on_trade_id"
 
   create_table "trades", force: true do |t|
-    t.string   "name",                      null: false
-    t.integer  "ideas_count",   default: 0
-    t.integer  "shops_count",   default: 0
-    t.integer  "workers_count", default: 0
+    t.string   "name",                        null: false
+    t.integer  "ideas_count",     default: 0
+    t.integer  "shops_count",     default: 0
+    t.integer  "workers_count",   default: 0
+    t.integer  "materials_count", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

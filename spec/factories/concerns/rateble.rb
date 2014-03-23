@@ -1,6 +1,10 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
+  trait :without_rating do
+    rating nil
+  end
+
   trait :with_rating do
     sequence(:rating) { |n| n % 6 }
   end
