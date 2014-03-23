@@ -6,7 +6,6 @@ class WorkersController < ApplicationController
   end
 
   def safe_params
-    params.require(:worker).permit(:name,:phone,:lower_price,:higher_price,:rating,:notes,
-      :shop_id,:trade_id)
+    params.require(:worker).permit(Worker::ATTRIBUTES - [:id])
   end
 end

@@ -6,6 +6,6 @@ class TradesController < ApplicationController
   end
 
   def safe_params
-    params.require(:trade).permit(:name, :description)
+    params.require(:trade).permit(Trade::ATTRIBUTES - [:id])
   end
 end

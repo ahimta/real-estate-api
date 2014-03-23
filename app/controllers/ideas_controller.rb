@@ -6,6 +6,6 @@ class IdeasController < ApplicationController
   end
 
   def safe_params
-    params.require(:idea).permit(:trade_id, :body)
+    params.require(:idea).permit(Idea::ATTRIBUTES - [:id])
   end
 end

@@ -6,7 +6,6 @@ class MaterialsController < ApplicationController
   end
 
   def safe_params
-    params.require(:material).permit(:name,:material_type,:lower_price,:higher_price,:rating,
-      :notes,:shop_id,:trade_id)
+    params.require(:material).permit(Material::ATTRIBUTES - [:id])
   end
 end

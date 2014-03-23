@@ -6,7 +6,6 @@ class ShopsController < ApplicationController
   end
 
   def safe_params
-    params.require(:shop).permit(:name,:phone,:lower_price,:higher_price,:rating,
-      :notes,:trade_id)
+    params.require(:shop).permit(Shop::ATTRIBUTES - [:id])
   end
 end

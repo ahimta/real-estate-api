@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe TradesController do
   it_behaves_like 'controllers/restful_resource' do
-    let!(:attributes) { [:id,:name,:shops_count,:ideas_count,:workers_count,:materials_count] }
-    let!(:invalid_factories) { [:without_name] }
+    let!(:attributes) { Trade::ATTRIBUTES }
+    let!(:invalid_factories) { Trade::INVALID_TRAITS }
     let(:resource) { :trade }
     let(:model) { Trade }
   end
