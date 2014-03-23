@@ -3,8 +3,7 @@ require 'spec_helper'
 describe ShopsController do
   it_behaves_like 'controllers/restful_resource' do
     let!(:attributes) {
-      [:id,:name,:phone,:lower_price,:higher_price,:rating,:material_type,:notes,:workers_count,
-        :trade_id]
+      [:id,:name,:phone,:lower_price,:higher_price,:rating,:notes,:workers_count,:trade_id]
     }
     let!(:invalid_factories) {
       [:without_name,:without_trade,:with_nonexistent_trade,

@@ -5,7 +5,6 @@ FactoryGirl.define do
     sequence(:phone) { |n| "phone#{n}" }
     sequence(:lower_price)
     sequence(:higher_price)
-    sequence(:material_type) { |n| "type#{n}" }
     sequence(:notes) { |n| "notes#{n}" }
   end
 end

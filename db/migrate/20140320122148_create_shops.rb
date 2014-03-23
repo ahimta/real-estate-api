@@ -7,7 +7,6 @@ class CreateShops < ActiveRecord::Migration
       t.integer :lower_price
       t.integer :higher_price
       t.integer :rating
-      t.string :material_type
       t.text :notes
 
       t.integer :workers_count, default: 0

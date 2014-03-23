@@ -28,7 +28,6 @@ ActiveRecord::Schema.define(version: 20140321001149) do
     t.integer  "lower_price"
     t.integer  "higher_price"
     t.integer  "rating"
-    t.string   "material_type"
     t.text     "notes"
     t.integer  "workers_count", default: 0
     t.integer  "trade_id",                  null: false
@@ -40,7 +39,6 @@ ActiveRecord::Schema.define(version: 20140321001149) do
 
   create_table "trades", force: true do |t|
     t.string   "name",                      null: false
-    t.text     "description"
     t.integer  "ideas_count",   default: 0
     t.integer  "shops_count",   default: 0
     t.integer  "workers_count", default: 0
