@@ -1,6 +1,7 @@
 class Shop < ActiveRecord::Base
-  include Acquaintanceable
   include Tradable
+  include Nameble
+  include Rateble
 
   has_many :workers, dependent: :destroy
 end

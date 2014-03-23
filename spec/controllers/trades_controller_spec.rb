@@ -2,60 +2,17 @@ require 'spec_helper'
 
 describe TradesController do
   let!(:attributes) { [:id,:name,:description,:shops_count,:ideas_count,:ideas,:shops] }
+  let(:resource) { :trade }
+  let(:model) { Trade }
 
-  it_behaves_like 'controllers/index' do
-    let(:resource) { :trade }
-    let(:model) { Trade }
-  end
+  it_behaves_like 'controllers/index'
 
-  it_behaves_like 'controllers/show' do
-    let(:resource) { :trade }
-    let(:model) { Trade }
-  end
+  it_behaves_like 'controllers/show'
 
-  it_behaves_like 'controllers/destroy' do
-    let(:resource) { :trade }
-    let(:model) { Trade }
-  end
+  it_behaves_like 'controllers/destroy'
 
-  describe '#create' do
-    let(:create) { post :create, params, format: :json }
-
-    context 'valid' do
-      let(:params) { {trade: {name: 'name', description: 'description'}} }
-      let(:record) { Trade.first }
-      let(:expected_record) {
-        {'id'=>record.id,'name'=>'name','description'=>'description','ideas_count'=>0,'shops_count'=>0,'ideas'=>[],'shops'=>[]}
-      }
-
-      it do
-        expect(Trade.count).to be_zero
-
-        create
-
-        expect(response.status).to eq(201)
-        expect(json_response).to eq(expected_record)
-        expect(Trade.count).to eq(1)
-      end
-    end
-    context 'invalid' do
-      let(:params) { {trade: {name: '', description: 'description'}} }
-      let(:errors) {
-        record = Trade.new name: '', description: 'description'
-        record.valid?
-        record.errors.to_json
-      }
-
-      it do
-        expect(Trade.count).to be_zero
-
-        create
-
-        expect(response.status).to eq(400)
-        expect(response.body).to eq(errors)
-        expect(Trade.count).to be_zero
-      end
-    end
+  it_behaves_like 'controllers/create' do
+    let!(:invalid_factories) { [:without_name] }
   end
 
   describe '#update' do

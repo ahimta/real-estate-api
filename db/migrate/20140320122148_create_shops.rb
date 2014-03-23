@@ -10,6 +10,8 @@ class CreateShops < ActiveRecord::Migration
       t.string :material_type
       t.text :notes
 
+      t.integer :workers_count, default: 0
+
       t.belongs_to :trade, index: true, null: false
 
       t.timestamps

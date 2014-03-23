@@ -1,19 +1,11 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :idea do
+  factory :idea, traits: [:with_trade] do
     sequence(:body) { |n| "body#{n}" }
-    trade
 
-    factory :valid_idea do
-      body 'body'
-    end
-    factory :invalid_idea do
+    trait :without_body do
       body ''
-    end
-    factory :invalid_idea_without_trade do
-      body ''
-      trade nil
     end
   end
 end

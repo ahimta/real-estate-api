@@ -27,6 +27,12 @@ module MyHelpers
     hash
   end
 
+  def get_record_errors(model, attrs)
+    record = model.new attrs
+    record.valid?
+    record.errors.to_json
+  end
+
   def json_response
     @json_response ||= JSON.parse response.body
   end

@@ -2,94 +2,18 @@ require 'spec_helper'
 
 describe IdeasController do
   let!(:attributes) { [:id,:body,:trade_id] }
+  let!(:resource) { :idea }
+  let!(:model) { Idea }
 
-  it_behaves_like 'controllers/index' do
-    let(:resource) { :idea }
-    let(:model) { Idea }
+  it_behaves_like 'controllers/index'
+
+  it_behaves_like 'controllers/show'
+
+  it_behaves_like 'controllers/create' do
+    let!(:invalid_factories) { [:without_body, :without_trade, :with_nonexistent_trade] }
   end
 
-  it_behaves_like 'controllers/show' do
-    let(:resource) { :idea }
-    let(:model) { Idea }
-  end
-
-  it_behaves_like 'controllers/destroy' do
-    let(:resource) { :idea }
-    let(:model) { Idea }
-  end
-
-  describe '#create' do
-    let!(:trade) { FactoryGirl.create :trade }
-    let(:create) { post :create, params, format: :json }
-
-    context 'valid' do
-      let(:params) { {idea: {body: 'body', trade_id: trade.id}} }
-      let(:record) { Idea.first }
-      let(:expected_record) {
-        {'id'=>record.id,'body'=>'body','trade_id'=>trade.id}
-      }
-
-      it do
-        expect(Trade.count).to eq(1)
-        expect(Idea.count).to be_zero
-
-        create
-
-        expect(response.status).to eq(201)
-        expect(json_response).to eq(expected_record)
-        expect(Trade.count).to eq(1)
-        expect(Idea.count).to eq(1)
-      end
-    end
-
-    context 'invalid' do
-      let(:errors) {
-        record = Idea.new params[:idea]
-        record.valid?
-        record.errors.to_json
-      }
-
-      context 'without trade_id' do
-        let(:params) { {idea: {body: 'body'}} }
-
-        it do
-          expect(Idea.count).to be_zero
-
-          create
-
-          expect(response.status).to eq(400)
-          expect(response.body).to eq(errors)
-          expect(Idea.count).to be_zero
-        end
-      end
-      context 'without body' do
-        let(:params) { {idea: {trade_id: trade.id}} }
-
-        it do
-          expect(Idea.count).to be_zero
-
-          create
-
-          expect(response.status).to eq(400)
-          expect(response.body).to eq(errors)
-          expect(Idea.count).to be_zero
-        end
-      end
-      context 'with non-existing trade_id' do
-        let(:params) { {idea: {body: 'body', trade_id: 99}} }
-
-        it do
-          expect(Idea.count).to be_zero
-
-          create
-
-          expect(response.status).to eq(400)
-          expect(response.body).to eq(errors)
-          expect(Idea.count).to be_zero
-        end
-      end
-    end
-  end
+  it_behaves_like 'controllers/destroy'
 
   describe '#update' do
     context 'does not exist' do

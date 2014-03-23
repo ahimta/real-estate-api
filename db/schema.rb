@@ -23,14 +23,15 @@ ActiveRecord::Schema.define(version: 20140321001149) do
   add_index "ideas", ["trade_id"], name: "index_ideas_on_trade_id"
 
   create_table "shops", force: true do |t|
-    t.string   "name",          null: false
+    t.string   "name",                      null: false
     t.string   "phone"
     t.integer  "lower_price"
     t.integer  "higher_price"
     t.integer  "rating"
     t.string   "material_type"
     t.text     "notes"
-    t.integer  "trade_id",      null: false
+    t.integer  "workers_count", default: 0
+    t.integer  "trade_id",                  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
