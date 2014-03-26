@@ -6,6 +6,6 @@ class MaterialsController < ApplicationController
   end
 
   def safe_params
-    params.require(:material).permit(Material::ATTRIBUTES - [:id])
+    params.require(:material).permit Material::SAFE_PARAMS
   end
 end

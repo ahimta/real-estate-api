@@ -6,6 +6,6 @@ class IdeasController < ApplicationController
   end
 
   def safe_params
-    params.require(:idea).permit(Idea::ATTRIBUTES - [:id])
+    params.require(:idea).permit Idea::SAFE_PARAMS
   end
 end

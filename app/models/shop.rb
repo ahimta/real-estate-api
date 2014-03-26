@@ -9,6 +9,8 @@ class Shop < ActiveRecord::Base
   ATTRIBUTES     = [:id] + Tradable::ATTRIBUTES + Priceble::ATTRIBUTES + Nameble::ATTRIBUTES +
     Rateble::ATTRIBUTES + Phonable::ATTRIBUTES + Notable::ATTRIBUTES + [:workers_count,:materials_count]
 
+  SAFE_PARAMS    = ATTRIBUTES - [:id,:workers_count,:materials_count]
+
   INVALID_TRAITS = Tradable::INVALID_TRAITS + Priceble::INVALID_TRAITS + Nameble::INVALID_TRAITS +
     Rateble::INVALID_TRAITS + Phonable::INVALID_TRAITS + Notable::INVALID_TRAITS
 
