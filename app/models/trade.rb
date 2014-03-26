@@ -3,7 +3,7 @@ class Trade < ActiveRecord::Base
 
   ATTRIBUTES     = [:id] + Nameble::ATTRIBUTES + [:ideas_count,:shops_count,:workers_count,
     :materials_count]
-  SAFE_PARAMS    = Nameble::ATTRIBUTES
+  SAFE_PARAMS    = Nameble::ATTRIBUTES - [:id]
   INVALID_TRAITS = Nameble::INVALID_TRAITS
   VALID_TRAITS   = Nameble::VALID_TRAITS
 
