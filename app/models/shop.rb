@@ -7,7 +7,8 @@ class Shop < ActiveRecord::Base
   include Rateble
 
   ATTRIBUTES     = [:id] + Tradable::ATTRIBUTES + Priceble::ATTRIBUTES + Nameble::ATTRIBUTES +
-    Rateble::ATTRIBUTES + Phonable::ATTRIBUTES + Notable::ATTRIBUTES + [:workers_count,:materials_count]
+    Rateble::ATTRIBUTES + Phonable::ATTRIBUTES + Notable::ATTRIBUTES +
+    [:workers_count,:materials_count]
 
   SAFE_PARAMS    = ATTRIBUTES - [:id,:workers_count,:materials_count]
 

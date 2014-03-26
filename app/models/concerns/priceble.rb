@@ -7,6 +7,7 @@ module Priceble
 
   included do
     validates :lower_price, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-    validates :higher_price, numericality: { only_integer: true, greater_than_or_equal_to: ->(priceble) { priceble.lower_price } }
+    validates :higher_price, numericality: { only_integer: true,
+      greater_than_or_equal_to: ->(priceble) { priceble.lower_price } }
   end
 end
