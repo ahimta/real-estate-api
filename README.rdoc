@@ -1,4 +1,4 @@
-== README
+== real-estate-api {<img src="https://codeclimate.com/github/Ahimta/real-estate-api.png" />}[https://codeclimate.com/github/Ahimta/real-estate-api]
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
