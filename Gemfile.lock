@@ -69,6 +69,7 @@ GEM
     mime-types (1.25.1)
     minitest (4.7.5)
     multi_json (1.9.2)
+    newrelic_rpm (3.7.3.204)
     nio4r (1.0.0)
     pg (0.17.1)
     polyglot (0.3.4)
@@ -151,6 +152,7 @@ DEPENDENCIES
   active_model_serializers (~> 0.8.0)
   factory_girl_rails (~> 4.4.1)
   guard-rspec (~> 0.4.0)
+  newrelic_rpm
   pg
   rack-cors (~> 0.2.9)
   railroady (~> 1.1.1)
