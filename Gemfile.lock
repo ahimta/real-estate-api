@@ -77,6 +77,8 @@ GEM
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
+    puma (2.7.1)
+      rack (>= 1.1, < 2.0)
     rack (1.5.2)
     rack-cors (0.2.9)
     rack-test (0.6.2)
@@ -154,6 +156,7 @@ DEPENDENCIES
   guard-rspec (~> 0.4.0)
   newrelic_rpm
   pg
+  puma
   rack-cors (~> 0.2.9)
   railroady (~> 1.1.1)
   rails (~> 4.0.3)
