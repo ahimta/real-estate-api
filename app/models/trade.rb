@@ -1,5 +1,4 @@
 class Trade < ActiveRecord::Base
-  include Nameble
   extend BaseModelable
 
   def self.mixins
@@ -8,23 +7,25 @@ class Trade < ActiveRecord::Base
 
   base_modelable
 
-  def self.counter_caches
-    [:ideas_count,:shops_count,:workers_count,:materials_count]
+  class << self
+    def counter_caches
+      [:ideas_count,:shops_count,:workers_count,:materials_count]
+    end
+
+    def special_attrs
+      []
+    end
+
+    def special_valid_traits
+      []
+    end
+
+    def special_invalid_traits
+      []
+    end
   end
 
-  def self.special_attrs
-    []
-  end
-
-  def self.special_valid_traits
-    []
-  end
-
-  def self.special_invalid_traits
-    []
-  end
-
-  ATTRIBUTES     = self.my_attributes
+  ATTRIBUTES     = self.my_attrs
   SAFE_PARAMS    = self.my_safe_params
   INVALID_TRAITS = self.my_invalid_traits
   VALID_TRAITS   = self.my_valid_traits

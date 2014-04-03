@@ -1,20 +1,32 @@
 class Worker < ActiveRecord::Base
-  include Phonable
-  include Priceble
-  include Shopable
-  include Tradable
-  include Notable
-  include Nameble
-  include Rateble
+  extend BaseModelable
 
-  ATTRIBUTES     = [:id] + Tradable::ATTRIBUTES + Shopable::ATTRIBUTES + Priceble::ATTRIBUTES +
-    Nameble::ATTRIBUTES + Rateble::ATTRIBUTES + Phonable::ATTRIBUTES + Notable::ATTRIBUTES
+  def self.mixins
+    [Nameble,Notable,Phonable,Priceble,Rateble,Shopable,Tradable]
+  end
 
-  SAFE_PARAMS    = ATTRIBUTES - [:id]
+  base_modelable
 
-  INVALID_TRAITS = Tradable::INVALID_TRAITS + Shopable::INVALID_TRAITS + Priceble::INVALID_TRAITS +
-    Nameble::INVALID_TRAITS + Rateble::INVALID_TRAITS + Phonable::INVALID_TRAITS + Notable::INVALID_TRAITS
+  class << self
+    def counter_caches
+      []
+    end
 
-  VALID_TRAITS   = Tradable::VALID_TRAITS + Shopable::VALID_TRAITS + Priceble::VALID_TRAITS +
-    Nameble::VALID_TRAITS + Rateble::VALID_TRAITS + Phonable::VALID_TRAITS + Notable::VALID_TRAITS
+    def special_attrs
+      []
+    end
+
+    def special_valid_traits
+      []
+    end
+
+    def special_invalid_traits
+      []
+    end
+  end
+
+  ATTRIBUTES     = self.my_attrs
+  SAFE_PARAMS    = self.my_safe_params
+  INVALID_TRAITS = self.my_invalid_traits
+  VALID_TRAITS   = self.my_valid_traits
 end

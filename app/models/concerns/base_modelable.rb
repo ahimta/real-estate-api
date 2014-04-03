@@ -3,11 +3,7 @@ module BaseModelable
     mixins.each { |mixin| include mixin }
   end
 
-  def mixins_attrs
-    my_reduce 'ATTRIBUTES'
-  end
-
-  def my_attributes
+  def my_attrs
     [:id] + mixins_attrs + special_attrs + counter_caches
   end
 
@@ -27,5 +23,9 @@ module BaseModelable
 
   def my_reduce(attr)
     mixins.reduce([]) { |acc, mixin| acc + eval("mixin::#{attr}") }
+  end
+
+  def mixins_attrs
+    my_reduce 'ATTRIBUTES'
   end
 end

@@ -1,19 +1,32 @@
 class Material < ActiveRecord::Base
-  include Tradable
-  include Shopable
-  include Priceble
-  include Notable
-  include Nameble
-  include Rateble
+  extend BaseModelable
 
-  ATTRIBUTES     = [:id] + Tradable::ATTRIBUTES + Shopable::ATTRIBUTES + Priceble::ATTRIBUTES +
-    Nameble::ATTRIBUTES + Rateble::ATTRIBUTES + Notable::ATTRIBUTES + [:material_type]
+  def self.mixins
+    [Nameble,Notable,Priceble,Rateble,Shopable,Tradable]
+  end
 
-  SAFE_PARAMS    = ATTRIBUTES - [:id]
+  base_modelable
 
-  INVALID_TRAITS = Tradable::INVALID_TRAITS + Shopable::INVALID_TRAITS + Priceble::INVALID_TRAITS +
-    Nameble::INVALID_TRAITS + Rateble::INVALID_TRAITS + Notable::INVALID_TRAITS
+  class << self
+    def counter_caches
+      []
+    end
 
-  VALID_TRAITS   = Tradable::VALID_TRAITS + Shopable::VALID_TRAITS + Priceble::VALID_TRAITS +
-    Nameble::VALID_TRAITS + Rateble::VALID_TRAITS + Notable::VALID_TRAITS
+    def special_attrs
+      [:material_type]
+    end
+
+    def special_valid_traits
+      []
+    end
+
+    def special_invalid_traits
+      []
+    end
+  end
+
+  ATTRIBUTES     = self.my_attrs
+  SAFE_PARAMS    = self.my_safe_params
+  INVALID_TRAITS = self.my_invalid_traits
+  VALID_TRAITS   = self.my_valid_traits
 end

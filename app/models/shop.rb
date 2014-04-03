@@ -1,22 +1,35 @@
 class Shop < ActiveRecord::Base
-  include Phonable
-  include Priceble
-  include Tradable
-  include Notable
-  include Nameble
-  include Rateble
+  extend BaseModelable
 
-  ATTRIBUTES     = [:id] + Tradable::ATTRIBUTES + Priceble::ATTRIBUTES + Nameble::ATTRIBUTES +
-    Rateble::ATTRIBUTES + Phonable::ATTRIBUTES + Notable::ATTRIBUTES +
-    [:workers_count,:materials_count]
+  def self.mixins
+    [Phonable,Priceble,Tradable,Notable,Nameble,Rateble]
+  end
 
-  SAFE_PARAMS    = ATTRIBUTES - [:id,:workers_count,:materials_count]
+  base_modelable
 
-  INVALID_TRAITS = Tradable::INVALID_TRAITS + Priceble::INVALID_TRAITS + Nameble::INVALID_TRAITS +
-    Rateble::INVALID_TRAITS + Phonable::INVALID_TRAITS + Notable::INVALID_TRAITS
+  class << self
+    def counter_caches
+      [:workers_count,:materials_count]
+    end
 
-  VALID_TRAITS   = Tradable::VALID_TRAITS + Priceble::VALID_TRAITS + Nameble::VALID_TRAITS +
-    Rateble::VALID_TRAITS + Phonable::VALID_TRAITS + Notable::VALID_TRAITS
+    def special_attrs
+      []
+    end
+
+    def special_valid_traits
+      []
+    end
+
+    def special_invalid_traits
+      []
+    end
+  end
+
+
+  ATTRIBUTES     = self.my_attrs
+  SAFE_PARAMS    = self.my_safe_params
+  INVALID_TRAITS = self.my_invalid_traits
+  VALID_TRAITS   = self.my_valid_traits
 
   has_many :workers, dependent: :destroy
 end

@@ -1,9 +1,32 @@
 class Idea < ActiveRecord::Base
-  include Tradable
-  include Bodyable
+  extend BaseModelable
 
-  ATTRIBUTES     = [:id] + Tradable::ATTRIBUTES + Bodyable::ATTRIBUTES
-  SAFE_PARAMS    = ATTRIBUTES - [:id]
-  INVALID_TRAITS = Tradable::INVALID_TRAITS + Bodyable::INVALID_TRAITS
-  VALID_TRAITS   = Tradable::VALID_TRAITS + Bodyable::VALID_TRAITS
+  def self.mixins
+    [Bodyable, Tradable]
+  end
+
+  base_modelable
+
+  class << self
+    def counter_caches
+      []
+    end
+
+    def special_attrs
+      []
+    end
+
+    def special_valid_traits
+      []
+    end
+
+    def special_invalid_traits
+      []
+    end
+  end
+
+  ATTRIBUTES     = self.my_attrs
+  SAFE_PARAMS    = self.my_safe_params
+  INVALID_TRAITS = self.my_invalid_traits
+  VALID_TRAITS   = self.my_valid_traits
 end
