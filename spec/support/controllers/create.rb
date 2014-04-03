@@ -7,17 +7,21 @@ shared_examples 'controllers/create' do
     end
 
     context 'valid' do
-      let(:params) { {resource => get_record_attrs(FactoryGirl.build(resource),attributes)} }
-      let(:expected_record) { get_record_attrs(record, attributes) }
-      let(:record) { model.first }
-
       it do
-        post :create, params, format: :json
+        valid_traits.each do |trait|
+          params = {resource => get_record_attrs(FactoryGirl.build(resource, trait),attributes)}
+          count = model.count
 
-        expect(response.status).to eq(201)
-        expect(json_response).to eq(expected_record)
+          post :create, params, format: :json
 
-        expect(model.count).to eq(1)
+          record = model.first
+          expected_record = get_record_attrs(record, attributes)
+
+          expect(response.status).to eq(201)
+          expect(json_response).to eq(expected_record)
+
+          expect(model.count).to eq(count + 1)
+        end
       end
     end
     context 'invalid' do

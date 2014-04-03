@@ -6,7 +6,7 @@ module Ratable
   VALID_TRAITS   = [:without_rating,:with_rating,:with_highest_rating,:with_lowest_rating]
 
   included do
-    validates :rating,
-      numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 5 }
+    validates :rating,numericality:
+      {only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 5},allow_nil: true
   end
 end
