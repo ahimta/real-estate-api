@@ -1,4 +1,4 @@
-module Nameble
+module Namable
   extend ActiveSupport::Concern
 
   ATTRIBUTES     = [:name]

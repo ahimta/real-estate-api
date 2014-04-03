@@ -1,4 +1,4 @@
-module Rateble
+module Ratable
   extend ActiveSupport::Concern
 
   ATTRIBUTES     = [:rating]
