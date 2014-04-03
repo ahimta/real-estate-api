@@ -2,7 +2,7 @@ class Shop < ActiveRecord::Base
   extend BaseModelable
 
   def self.mixins
-    [Phonable,Priceble,Tradable,Notable,Nameble,Rateble]
+    [Phonable,Priceble,Tradable,Notable,Namable,Ratable]
   end
 
   base_modelable

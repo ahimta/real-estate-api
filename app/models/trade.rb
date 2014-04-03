@@ -2,7 +2,7 @@ class Trade < ActiveRecord::Base
   extend BaseModelable
 
   def self.mixins
-    [Nameble]
+    [Namable]
   end
 
   base_modelable

@@ -2,7 +2,7 @@ class Worker < ActiveRecord::Base
   extend BaseModelable
 
   def self.mixins
-    [Nameble,Notable,Phonable,Priceble,Rateble,Shopable,Tradable]
+    [Namable,Notable,Phonable,Priceble,Ratable,Shopable,Tradable]
   end
 
   base_modelable

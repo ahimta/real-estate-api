@@ -2,7 +2,7 @@ class Material < ActiveRecord::Base
   extend BaseModelable
 
   def self.mixins
-    [Nameble,Notable,Priceble,Rateble,Shopable,Tradable]
+    [Namable,Notable,Priceble,Ratable,Shopable,Tradable]
   end
 
   base_modelable
