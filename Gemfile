@@ -14,6 +14,7 @@ group :development, :test do
   gem 'guard-rspec', '~> 0.4.0', require: false
   gem 'factory_girl_rails', '~> 4.4.1'
   gem 'railroady', '~> 1.1.1'
+  gem 'codeclimate-test-reporter', require: nil
 end
 
 group :production do
