@@ -1,32 +1,8 @@
 class Idea < ActiveRecord::Base
-  extend BaseModelable
+  props = ModelProps.new(Idea, [Bodyable, Tradable])
 
-  def self.mixins
-    [Bodyable, Tradable]
-  end
-
-  base_modelable
-
-  class << self
-    def counter_caches
-      []
-    end
-
-    def special_attrs
-      []
-    end
-
-    def special_valid_traits
-      []
-    end
-
-    def special_invalid_traits
-      []
-    end
-  end
-
-  ATTRIBUTES     = self.my_attrs
-  SAFE_PARAMS    = self.my_safe_params
-  INVALID_TRAITS = self.my_invalid_traits
-  VALID_TRAITS   = self.my_valid_traits
+  ATTRIBUTES     = props.attrs
+  SAFE_PARAMS    = props.safe_params
+  INVALID_TRAITS = props.invalid_traits
+  VALID_TRAITS   = props.valid_traits
 end
