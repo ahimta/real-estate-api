@@ -1,6 +1,6 @@
 class Material < ActiveRecord::Base
   props = ModelProps.new(Material, [Namable,Notable,Priceble,Ratable,Shopable,Tradable],
-    attrs: [:material_type], parents: [:Trade, :Shop])
+    parents: [:Trade, :Shop])
 
   ATTRIBUTES     = props.attrs
   SAFE_PARAMS    = props.safe_params

@@ -3,7 +3,6 @@ class CreateMaterials < ActiveRecord::Migration
     create_table :materials do |t|
       t.string :name, null: false
 
-      t.string :material_type
       t.integer :lower_price, default: 0
       t.integer :higher_price, default: 0
       t.integer :rating, default: 0
