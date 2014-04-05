@@ -1,5 +1,5 @@
 class Idea < ActiveRecord::Base
-  props = ModelProps.new(Idea, [Bodyable, Tradable])
+  props = ModelProps.new(Idea, [Bodyable, Tradable], parents: [:Trade])
 
   ATTRIBUTES     = props.attrs
   SAFE_PARAMS    = props.safe_params
