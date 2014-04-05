@@ -23,14 +23,14 @@ ActiveRecord::Schema.define(version: 20140323142039) do
   add_index "ideas", ["trade_id"], name: "index_ideas_on_trade_id"
 
   create_table "materials", force: true do |t|
-    t.string   "name",          null: false
+    t.string   "name",                      null: false
     t.string   "material_type"
-    t.integer  "lower_price"
-    t.integer  "higher_price"
-    t.integer  "rating"
+    t.integer  "lower_price",   default: 0
+    t.integer  "higher_price",  default: 0
+    t.integer  "rating",        default: 0
     t.text     "notes"
-    t.integer  "shop_id",       null: false
-    t.integer  "trade_id",      null: false
+    t.integer  "shop_id",                   null: false
+    t.integer  "trade_id",                  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -41,9 +41,9 @@ ActiveRecord::Schema.define(version: 20140323142039) do
   create_table "shops", force: true do |t|
     t.string   "name",                        null: false
     t.string   "phone"
-    t.integer  "lower_price"
-    t.integer  "higher_price"
-    t.integer  "rating"
+    t.integer  "lower_price",     default: 0
+    t.integer  "higher_price",    default: 0
+    t.integer  "rating",          default: 0
     t.text     "notes"
     t.integer  "workers_count",   default: 0
     t.integer  "materials_count", default: 0
@@ -65,14 +65,14 @@ ActiveRecord::Schema.define(version: 20140323142039) do
   end
 
   create_table "workers", force: true do |t|
-    t.string   "name",         null: false
+    t.string   "name",                     null: false
     t.string   "phone"
-    t.integer  "lower_price"
-    t.integer  "higher_price"
-    t.integer  "rating"
+    t.integer  "lower_price",  default: 0
+    t.integer  "higher_price", default: 0
+    t.integer  "rating",       default: 0
     t.text     "notes"
-    t.integer  "shop_id",      null: false
-    t.integer  "trade_id",     null: false
+    t.integer  "shop_id",                  null: false
+    t.integer  "trade_id",                 null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

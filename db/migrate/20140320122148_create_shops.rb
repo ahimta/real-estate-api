@@ -4,15 +4,15 @@ class CreateShops < ActiveRecord::Migration
       t.string :name, null: false
 
       t.string :phone
-      t.integer :lower_price
-      t.integer :higher_price
-      t.integer :rating
+      t.integer :lower_price, default: 0
+      t.integer :higher_price, default: 0
+      t.integer :rating, default: 0
       t.text :notes
 
       t.integer :workers_count, default: 0
       t.integer :materials_count, default: 0
 
-      t.belongs_to :trade, index: true, null: false
+      t.belongs_to :trade, index: true, unique: false, null: false
 
       t.timestamps
     end

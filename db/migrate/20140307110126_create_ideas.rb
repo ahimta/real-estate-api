@@ -3,7 +3,7 @@ class CreateIdeas < ActiveRecord::Migration
     create_table :ideas do |t|
       t.text :body, null: false
 
-      t.belongs_to :trade, index: true, null: false
+      t.belongs_to :trade, index: true, unique: false, null: false
 
       t.timestamps
     end

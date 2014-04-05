@@ -4,13 +4,13 @@ class CreateMaterials < ActiveRecord::Migration
       t.string :name, null: false
 
       t.string :material_type
-      t.integer :lower_price
-      t.integer :higher_price
-      t.integer :rating
+      t.integer :lower_price, default: 0
+      t.integer :higher_price, default: 0
+      t.integer :rating, default: 0
       t.text :notes
 
-      t.belongs_to :shop, index: true, null: false
-      t.belongs_to :trade, index: true, null: false
+      t.belongs_to :shop, index: true, unique: false, null: false
+      t.belongs_to :trade, index: true, unique: false, null: false
 
       t.timestamps
     end
