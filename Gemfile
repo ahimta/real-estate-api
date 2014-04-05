@@ -9,21 +9,27 @@ group :doc do
 end
 
 group :development, :test do
-  gem 'sqlite3', '~> 1.3.9'
-  gem 'rspec-rails', '~> 2.14.1'
-  gem 'guard-rspec', '~> 0.4.0', require: false
   gem 'factory_girl_rails', '~> 4.4.1'
+  gem 'rspec-rails', '~> 2.14.1'
+  gem 'sqlite3', '~> 1.3.9'
+end
+
+group :development do
+  gem 'guard-rspec', '~> 0.4.0', require: false
   gem 'railroady', '~> 1.1.1'
+end
+
+group :test do
   gem 'codeclimate-test-reporter', require: nil
 end
 
 group :production do
-  gem 'pg'
   gem 'rails_12factor'
+  gem 'newrelic_rpm'
+  gem 'puma'
+  gem 'pg'
 end
 
 gem 'rails-i18n', '~> 4.0.1'
-gem 'rack-cors', '~> 0.2.9', require: 'rack/cors'
 gem 'active_model_serializers', '~> 0.8.0'
-gem 'newrelic_rpm'
-gem 'puma'
+gem 'rack-cors', '~> 0.2.9', require: 'rack/cors'
