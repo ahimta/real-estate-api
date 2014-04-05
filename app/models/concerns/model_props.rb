@@ -15,13 +15,22 @@ class ModelProps
     @safe_params = mixins_attrs + attrs
     @valid_traits = my_reduce('VALID_TRAITS') + valid_traits
     @invalid_traits = my_reduce('INVALID_TRAITS') + invalid_traits
+    @model = model
 
-    handle_model!(model, mixins, parents)
+    ref_intgerify(mixins, parents)
+    include_mixins mixins
   end
 
-  def handle_model!(model, mixins, parents)
-    model.class_eval do
+  private
+
+  def include_mixins(mixins)
+    @model.class_eval do
       mixins.each { |mixin| include mixin }
+    end
+  end
+
+  def ref_intgerify(mixins, parents)
+    @model.class_eval do
       parents.each do |parent|
         validates "#{parent.to_s.downcase}_id".to_sym, presence: true,
           inclusion: { in: ->(record) {parent.to_s.constantize.ids} }
@@ -30,8 +39,6 @@ class ModelProps
       end
     end
   end
-
-  private
 
   def my_reduce(attr)
     @mixins.reduce([]) { |acc, mixin| acc + eval("mixin::#{attr}") }
