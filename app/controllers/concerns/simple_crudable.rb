@@ -38,6 +38,6 @@ module SimpleCrudable
   private
 
   def get_record
-    get_model.find params[:id]
+    @record ||= get_model.find params[:id]
   end
 end
