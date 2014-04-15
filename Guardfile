@@ -9,6 +9,7 @@ guard :rspec do
   # my rules
   watch(%r{^app/models/(.+)\.rb$})                    { |m| ["spec/models/#{m[1]}_spec.rb", "spec/controllers/#{m[1]}s_controller_spec.rb"] }
   watch(%r{^app/.+/concerns/.+\.rb$})                 { |m| 'spec' }
+  watch(%r{^config/.*$})                              { |m| 'spec' }
 
   # Rails example
   watch(%r{^app/(.+)\.rb$})                           { |m| "spec/#{m[1]}_spec.rb" }
