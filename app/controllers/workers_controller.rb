@@ -1,5 +1,6 @@
 class WorkersController < ApplicationController
   include SimpleCrudable
+  include ShopablesController
 
   def get_model
     Worker
