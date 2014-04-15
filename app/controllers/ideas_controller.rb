@@ -1,6 +1,6 @@
 class IdeasController < ApplicationController
   include SimpleCrudable
-  include TradablesController
+  include TradableController
 
   def get_model
     @model ||= Idea

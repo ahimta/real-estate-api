@@ -1,6 +1,6 @@
 class MaterialsController < ApplicationController
   include SimpleCrudable
-  include ShopablesController
+  include ShopableController
 
   def get_model
     @model ||= Material

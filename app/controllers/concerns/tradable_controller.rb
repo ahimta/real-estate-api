@@ -1,4 +1,4 @@
-module TradablesController
+module TradableController
   extend ActiveSupport::Concern
 
   def index

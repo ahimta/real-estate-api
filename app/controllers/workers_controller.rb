@@ -1,6 +1,6 @@
 class WorkersController < ApplicationController
   include SimpleCrudable
-  include ShopablesController
+  include ShopableController
 
   def get_model
     @model ||= Worker

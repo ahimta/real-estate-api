@@ -1,4 +1,4 @@
-module ShopablesController
+module ShopableController
   extend ActiveSupport::Concern
 
   def index
