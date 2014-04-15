@@ -23,11 +23,11 @@ shared_examples 'controllers/index' do
         expect(response.status).to eq(200)
         case resource
         when :idea, :shop
-          expect(json_response).to eq({"#{resource.to_s}s" => expected_records,'parents'=>
-            {'trades'=> JSON.parse(Trade.all.to_json)}})
+          expect(json_response).to eq({"#{resource.to_s}s" => expected_records,'meta'=>
+            {'parents' => {'trades'=> JSON.parse(Trade.all.to_json)}}})
         when :material, :worker
-          expect(json_response).to eq({"#{resource.to_s}s" => expected_records,'parents'=>
-            {'trades'=> JSON.parse(Trade.all.to_json),'shops'=>JSON.parse(Shop.all.to_json)}})
+          expect(json_response).to eq({"#{resource.to_s}s" => expected_records,'meta'=>
+            {'parents' => {'trades'=> JSON.parse(Trade.all.to_json),'shops'=>JSON.parse(Shop.all.to_json)}}})
         else
           expect(json_response).to eq({"#{resource.to_s}s" => expected_records})
         end
