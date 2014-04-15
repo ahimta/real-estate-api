@@ -1,16 +1,21 @@
 module SimpleCrudable
   extend ActiveSupport::Concern
 
+  included do
+    before_action :get_model
+    before_action :get_record, only: [:show, :update, :destroy]
+  end
+
   def index
-    render json: get_model.all, status: 200
+    render json: @model.all, status: 200
   end
 
   def show
-    render json: get_record, status: 200
+    render json: @record, status: 200
   end
 
   def create
-    record = get_model.new safe_params
+    record = @model.new safe_params
 
     if record.save
       render json: record, status: 201
@@ -20,24 +25,23 @@ module SimpleCrudable
   end
 
   def update
-    record = get_record
-    record.attributes = safe_params
+    @record.attributes = safe_params
 
-    if record.save
-      render json: record, status: 200
+    if @record.save
+      render json: @record, status: 200
     else
-      render json: record.errors, status: 400
+      render json: @record.errors, status: 400
     end
   end
 
   def destroy
-    render json: get_record.destroy, status: 200
+    render json: @record.destroy, status: 200
   end
 
 
   private
 
   def get_record
-    @record ||= get_model.find params[:id]
+    @record ||= @model.find params[:id]
   end
 end

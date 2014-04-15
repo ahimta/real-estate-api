@@ -3,7 +3,7 @@ class WorkersController < ApplicationController
   include ShopablesController
 
   def get_model
-    Worker
+    @model ||= Worker
   end
 
   def safe_params

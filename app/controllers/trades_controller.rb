@@ -2,7 +2,7 @@ class TradesController < ApplicationController
   include SimpleCrudable
 
   def get_model
-    Trade
+    @model ||= Trade
   end
 
   def safe_params

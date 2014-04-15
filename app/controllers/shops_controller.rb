@@ -3,7 +3,7 @@ class ShopsController < ApplicationController
   include TradablesController
 
   def get_model
-    Shop
+    @model ||= Shop
   end
 
   def safe_params

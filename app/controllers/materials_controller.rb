@@ -3,7 +3,7 @@ class MaterialsController < ApplicationController
   include ShopablesController
 
   def get_model
-    Material
+    @model ||= Material
   end
 
   def safe_params

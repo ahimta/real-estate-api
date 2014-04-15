@@ -3,7 +3,7 @@ class IdeasController < ApplicationController
   include TradablesController
 
   def get_model
-    Idea
+    @model ||= Idea
   end
 
   def safe_params
