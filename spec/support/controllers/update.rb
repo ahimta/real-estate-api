@@ -22,7 +22,7 @@ shared_examples 'controllers/update' do
           update
 
           expect(response.status).to eq(200)
-          expect(json_response).to eq(expected)
+          expect(json_response).to eq({resource.to_s => expected})
 
           expect(model.count).to eq(count)
         end

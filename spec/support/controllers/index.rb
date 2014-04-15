@@ -21,7 +21,7 @@ shared_examples 'controllers/index' do
         get :index, format: :json
 
         expect(response.status).to eq(200)
-        expect(json_response).to eq(expected_records)
+        expect(json_response).to eq({"#{resource.to_s}s" => expected_records})
 
         expect(model.count).to eq(count)
       end

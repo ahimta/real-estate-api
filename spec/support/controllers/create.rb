@@ -18,7 +18,7 @@ shared_examples 'controllers/create' do
           expected_record = get_record_attrs(record, attributes)
 
           expect(response.status).to eq(201)
-          expect(json_response).to eq(expected_record)
+          expect(json_response).to eq({resource.to_s => expected_record})
 
           expect(model.count).to eq(count + 1)
         end

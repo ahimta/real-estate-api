@@ -23,7 +23,7 @@ shared_examples 'controllers/destroy' do
 
         delete :destroy, id: record.id, format: :json
 
-        expect(json_response).to eq(expected_record)
+        expect(json_response).to eq({resource.to_s => expected_record})
         expect(response.status).to eq(200)
 
         expect(model.count).to eq(count - 1)

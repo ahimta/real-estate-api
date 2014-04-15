@@ -8,7 +8,7 @@ shared_examples 'controllers/show' do
       let(:record) { model.last }
       let(:count) { 7 }
 
-      let(:expected_record) { get_record_attrs(record, attributes) }
+      let(:expected_record) { {resource.to_s => get_record_attrs(record, attributes)} }
 
       it do
         expect(model.count).to eq(count)
