@@ -16,7 +16,7 @@ Trade.destroy_all
   3.times do |j|
     j += 1
 
-    Idea.create body: "Idea#{j}", trade_id: trade.id
+    Idea.create body: "Trade#{i} Idea#{j}", trade_id: trade.id
   end
 
   3.times do |j|
