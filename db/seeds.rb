@@ -9,8 +9,9 @@
 Trade.destroy_all
 
 5.times do |i|
-  trade = Trade.create! name: "Trade#{i}"
   i += 1
+
+  trade = Trade.create! name: "Trade#{i}"
 
   3.times do |j|
     j += 1
