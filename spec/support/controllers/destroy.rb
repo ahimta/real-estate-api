@@ -2,6 +2,7 @@ require 'spec_helper'
 
 shared_examples 'controllers/destroy' do
   describe '#destroy' do
+
     context 'does not exist' do
       it { expect(model.count).to be_zero }
       it do

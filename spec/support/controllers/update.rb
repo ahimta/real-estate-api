@@ -32,7 +32,7 @@ shared_examples 'controllers/update' do
           invalid_factories.each do |trait|
             expect(model.count).to eq(count)
 
-            params   = {'id'=>id,resource=>get_record_attributes(FactoryGirl.build(resource, trait))}
+            params   = {'id'=>id,resource=>get_record_attributes(FactoryGirl.build(resource,trait))}
             expected = get_record_errors(model, params[resource])
 
             put :update, params, format: :json

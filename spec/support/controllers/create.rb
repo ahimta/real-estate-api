@@ -2,9 +2,7 @@ require 'spec_helper'
 
 shared_examples 'controllers/create' do
   describe '#create' do
-    before do
-      expect(model.count).to be_zero
-    end
+    before { expect(model.count).to be_zero }
 
     context 'valid' do
       it do
