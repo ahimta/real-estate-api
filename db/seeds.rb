@@ -10,16 +10,23 @@ Trade.destroy_all
 
 5.times do |i|
   trade = Trade.create! name: "Trade#{i}"
+  i += 1
 
   3.times do |j|
+    j += 1
+
     Idea.create body: "Idea#{j}", trade_id: trade.id
   end
 
   3.times do |j|
+    j += 1
+
     shop = Shop.create! name: "Shop#{i*j}", phone:"Shop#{i*j} phone", lower_price: j,
       higher_price: (j+50), rating:(j%6), notes:"Shop#{i*j} notes", trade_id: trade.id
 
     2.times do |k|
+      k += 1
+
       Material.create! name: "Material#{i*j*k}", lower_price: i*j*k, higher_price: (i*j*k+100), rating: (i*j*k%6),
         notes: "Material#{i*j*k} notes", shop_id: shop.id, trade_id: trade.id
 
