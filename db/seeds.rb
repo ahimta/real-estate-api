@@ -6,24 +6,28 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-trade0 = Trade.create! name: 'كهرباء'
-trade1 = Trade.create! name: 'لياسة'
-trade2 = Trade.create! name: 'بوية'
+Trade.destroy_all
 
-shop0 = Shop.create! name: 'أنوار الشعيب', phone: '0501024323', rating: 5, lower_price: 5,
-  higher_price: 300, trade_id: trade0.id
-shop1 = Shop.create! name: 'راشد', phone: '0502401323', rating: 4, lower_price: 30,
-  higher_price: 500, trade_id: trade1.id
+QUANTITY = 5
 
-worker0 = Worker.create! name: 'أحمد', phone: '0555234321', rating: 3, lower_price: 50,
-  higher_price: 90, shop_id: shop0.id, trade_id: trade0.id
-worker1 = Worker.create! name: 'أحمد', phone: '0555267621', rating: 5, lower_price: 50,
-  higher_price: 130, shop_id: shop0.id, trade_id: trade1.id
+QUANTITY.times do |i|
+  trade = Trade.create! name: "Trade#{i}"
 
-material0 = Material.create! name: 'اسمنت المدينة', material_type: 'اسمنت', rating: 4,
-  lower_price: 15, higher_price: 20, shop_id: shop0.id, trade_id: trade1.id
-material1 = Material.create! name: 'دهانات الجزيرة', material_type: 'بوية بدون لمعة', rating: 3,
-  lower_price: 15, higher_price: 20, shop_id: shop0.id, trade_id: trade2.id
+  QUANTITY.times do |j|
+    Idea.create body: "Idea#{j}", trade_id: trade.id
+  end
 
-trade0.ideas.create! [{body: 'تجريح الأسلاك'}, {body: 'عداد أصلي'}]
-trade1.ideas.create! [{body: 'شراء الأبواب جاهزة'}, {body: 'عدم استخدام دهانات تجارية'}]
+  QUANTITY.times do |j|
+    shop = Shop.create! name: "Shop#{j}", phone:"Shop#{j} phone", lower_price: j,
+      higher_price: (j+50), rating:(j%6), notes:"Shop#{j} notes", trade_id: trade.id
+
+    QUANTITY.times do |k|
+      Material.create! name: "Material#{k}", lower_price: k, higher_price: (k+100), rating: (k%6),
+        notes: "Material#{k} notes", shop_id: shop.id, trade_id: trade.id
+
+      Worker.create! name: "Worker#{k}", phone: "Worker#{k} phone", lower_price: k,
+        higher_price: (k+100), rating: (k%6), notes: "Worker#{k} notes", shop_id: shop.id,
+        trade_id: trade.id
+    end
+  end
+end
