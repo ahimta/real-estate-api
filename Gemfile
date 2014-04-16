@@ -19,6 +19,8 @@ group :development do
   gem 'railroady', '~> 1.1.1'
   gem 'spring'
   gem 'spring-commands-rspec'
+  gem 'brakeman', '~> 2.4.3'
+  gem 'rails_best_practices', '~> 1.15.2'
 end
 
 group :test do
