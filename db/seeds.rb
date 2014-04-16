@@ -8,25 +8,23 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 Trade.destroy_all
 
-QUANTITY = 5
-
-QUANTITY.times do |i|
+5.times do |i|
   trade = Trade.create! name: "Trade#{i}"
 
-  QUANTITY.times do |j|
+  3.times do |j|
     Idea.create body: "Idea#{j}", trade_id: trade.id
   end
 
-  QUANTITY.times do |j|
-    shop = Shop.create! name: "Shop#{j}", phone:"Shop#{j} phone", lower_price: j,
-      higher_price: (j+50), rating:(j%6), notes:"Shop#{j} notes", trade_id: trade.id
+  3.times do |j|
+    shop = Shop.create! name: "Shop#{i*j}", phone:"Shop#{i*j} phone", lower_price: j,
+      higher_price: (j+50), rating:(j%6), notes:"Shop#{i*j} notes", trade_id: trade.id
 
-    QUANTITY.times do |k|
-      Material.create! name: "Material#{k}", lower_price: k, higher_price: (k+100), rating: (k%6),
-        notes: "Material#{k} notes", shop_id: shop.id, trade_id: trade.id
+    2.times do |k|
+      Material.create! name: "Material#{i*j*k}", lower_price: i*j*k, higher_price: (i*j*k+100), rating: (i*j*k%6),
+        notes: "Material#{i*j*k} notes", shop_id: shop.id, trade_id: trade.id
 
-      Worker.create! name: "Worker#{k}", phone: "Worker#{k} phone", lower_price: k,
-        higher_price: (k+100), rating: (k%6), notes: "Worker#{k} notes", shop_id: shop.id,
+      Worker.create! name: "Worker#{i*j*k}", phone: "Worker#{i*j*k} phone", lower_price: i*j*k,
+        higher_price: (i*j*k+100), rating: (i*j*k%6), notes: "Worker#{i*j*k} notes", shop_id: shop.id,
         trade_id: trade.id
     end
   end
