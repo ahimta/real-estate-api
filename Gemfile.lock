@@ -80,6 +80,9 @@ GEM
     hike (1.2.3)
     i18n (0.6.9)
     json (1.8.1)
+    kaminari (0.15.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     listen (2.7.1)
       celluloid (>= 0.15.2)
       celluloid-io (>= 0.15.0)
@@ -217,6 +220,7 @@ DEPENDENCIES
   codeclimate-test-reporter
   factory_girl_rails (~> 4.4.1)
   guard-rspec (~> 4.2.8)
+  kaminari (~> 0.15.1)
   newrelic_rpm
   pg
   puma
