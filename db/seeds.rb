@@ -28,9 +28,6 @@ Trade.destroy_all
     2.times do |k|
       k += 1
 
-      Material.create! name: "Trade#{i} Shop#{i*j} Material#{i*j*k}", lower_price: i*j*k, higher_price: (i*j*k+100), rating: (i*j*k%6),
-        notes: "Material#{i*j*k} notes", shop_id: shop.id, trade_id: trade.id
-
       Worker.create! name: "Trade#{i} Shop#{i*j} Worker#{i*j*k}", phone: "Worker#{i*j*k} phone", lower_price: i*j*k,
         higher_price: (i*j*k+100), rating: (i*j*k%6), notes: "Worker#{i*j*k} notes", shop_id: shop.id,
         trade_id: trade.id

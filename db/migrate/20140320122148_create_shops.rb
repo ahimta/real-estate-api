@@ -10,7 +10,6 @@ class CreateShops < ActiveRecord::Migration
       t.text :notes
 
       t.integer :workers_count, default: 0
-      t.integer :materials_count, default: 0
 
       t.belongs_to :trade, index: true, unique: false, null: false
 

@@ -1,6 +1,6 @@
 class Trade < ActiveRecord::Base
   props = ModelProps.new(Trade, [Namable],
-    counter_caches: [:ideas_count,:shops_count,:workers_count,:materials_count])
+    counter_caches: [:ideas_count,:shops_count,:workers_count])
 
   ATTRIBUTES     = props.attrs
   SAFE_PARAMS    = props.safe_params
