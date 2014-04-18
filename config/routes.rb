@@ -1,6 +1,4 @@
 RealEState::Application.routes.draw do
-  resources :materials, only: [:index, :show, :create, :update, :destroy], defaults: { format: :json }
-
   resources :workers, only: [:index, :show, :create, :update, :destroy], defaults: { format: :json }
 
   resources :shops, only: [:index, :show, :create, :update, :destroy], defaults: { format: :json }
