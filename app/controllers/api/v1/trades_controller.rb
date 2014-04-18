@@ -1,4 +1,4 @@
-class TradesController < ApplicationController
+class Api::V1::TradesController < ApplicationController
   include SimpleCrudable
 
   def get_model

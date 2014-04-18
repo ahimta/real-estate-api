@@ -1,11 +1,15 @@
 RealEState::Application.routes.draw do
-  resources :workers, only: [:index, :show, :create, :update, :destroy], defaults: { format: :json }
+  namespace :api do
+    namespace :v1 do
+      resources :workers, only: [:index, :show, :create, :update, :destroy], defaults: { format: :json }
 
-  resources :shops, only: [:index, :show, :create, :update, :destroy], defaults: { format: :json }
+      resources :shops, only: [:index, :show, :create, :update, :destroy], defaults: { format: :json }
 
-  resources :ideas, only: [:index, :show, :create, :update, :destroy], defaults: { format: :json }
+      resources :ideas, only: [:index, :show, :create, :update, :destroy], defaults: { format: :json }
 
-  resources :trades, only: [:index, :show, :create, :update, :destroy], defaults: { format: :json }
+      resources :trades, only: [:index, :show, :create, :update, :destroy], defaults: { format: :json }
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

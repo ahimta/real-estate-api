@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe WorkersController do
+describe Api::V1::WorkersController do
   it_behaves_like 'controllers/restful_resource' do
     let!(:invalid_factories) { Worker::INVALID_TRAITS }
     let!(:valid_traits) { Worker::VALID_TRAITS }

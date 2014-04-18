@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ShopsController do
+describe Api::V1::ShopsController do
   it_behaves_like 'controllers/restful_resource' do
     let!(:invalid_factories) { Shop::INVALID_TRAITS }
     let!(:valid_traits) { Shop::VALID_TRAITS }

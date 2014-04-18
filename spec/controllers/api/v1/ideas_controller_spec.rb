@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe IdeasController do
+describe Api::V1::IdeasController do
   it_behaves_like 'controllers/restful_resource' do
     let!(:invalid_factories) { Idea::INVALID_TRAITS }
     let!(:valid_traits) { Idea::VALID_TRAITS }

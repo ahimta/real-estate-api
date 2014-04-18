@@ -1,4 +1,4 @@
-class WorkersController < ApplicationController
+class Api::V1::WorkersController < ApplicationController
   include SimpleCrudable
   include ShopableController
 

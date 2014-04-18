@@ -1,4 +1,4 @@
-class ShopsController < ApplicationController
+class Api::V1::ShopsController < ApplicationController
   include SimpleCrudable
   include TradableController
 
