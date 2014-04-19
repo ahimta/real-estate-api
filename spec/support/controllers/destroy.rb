@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-shared_examples 'controllers/destroy' do
+shared_examples 'controllers/destroy' do |model, resource, attributes, valid_traits, invalid_traits|
   describe '#destroy' do
 
     context 'does not exist' do
@@ -12,23 +12,18 @@ shared_examples 'controllers/destroy' do
     end
 
     context 'exists' do
+      let(:expected_record) { get_record_attrs(record, attributes) }
       let!(:records) { FactoryGirl.create_list resource, count }
-
       let(:record) { model.last }
       let(:count) { 3 }
 
-      let(:expected_record) { get_record_attrs(record, attributes) }
+      before { expect(model.count).to eq(count) }
 
-      it do
-        expect(model.count).to eq(count)
+      it { delete :destroy, id: record.id, format: :json }
 
-        delete :destroy, id: record.id, format: :json
-
-        expect(json_response).to eq({resource.to_s => expected_record})
-        expect(response.status).to eq(200)
-
-        expect(model.count).to eq(count - 1)
-      end
+      after { expect(json_response).to eq({resource => expected_record}) }
+      after { expect(model.count).to eq(count - 1) }
+      after { expect(response.status).to eq(200) }
     end
   end
 end

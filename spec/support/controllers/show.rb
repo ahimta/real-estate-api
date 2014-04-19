@@ -1,25 +1,19 @@
 require 'spec_helper'
 
-shared_examples 'controllers/show' do
+shared_examples 'controllers/show' do |model, resource, attributes, valid_traits, invalid_traits|
   describe '#show' do
     context 'exists' do
+      let(:expected_record) { {resource => get_record_attrs(record, attributes)} }
       let!(:records) { FactoryGirl.create_list resource, count }
-
       let(:record) { model.last }
-      let(:count) { 7 }
+      let(:count) { 3 }
 
-      let(:expected_record) { {resource.to_s => get_record_attrs(record, attributes)} }
+      before { expect(model.count).to eq(count) }
+      before { get :show, id: record.id, format: :json }
+      after { expect(model.count).to eq(count) }
 
-      it do
-        expect(model.count).to eq(count)
-
-        get :show, id: record.id, format: :json
-
-        expect(response.status).to eq(200)
-        expect(json_response).to eq(expected_record)
-
-        expect(model.count).to eq(count)
-      end
+      it { expect(response.status).to eq(200) }
+      it { expect(json_response).to eq(expected_record) }
     end
 
     context 'does not exist' do

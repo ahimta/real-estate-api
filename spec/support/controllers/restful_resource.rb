@@ -1,13 +1,16 @@
 require 'spec_helper'
 
-shared_examples 'controllers/restful_resource' do
-  it_behaves_like 'controllers/index'
+shared_examples 'controllers/restful_resource' do |model, resource|
 
-  it_behaves_like 'controllers/show'
+  args = [model, resource, model.props.attrs, model.props.valid_traits, model.props.invalid_traits]
 
-  it_behaves_like 'controllers/create'
+  it_behaves_like 'controllers/index', *args
 
-  it_behaves_like 'controllers/update'
+  it_behaves_like 'controllers/show', *args
 
-  it_behaves_like 'controllers/destroy'
+  it_behaves_like 'controllers/create', *args
+
+  it_behaves_like 'controllers/update', *args
+
+  it_behaves_like 'controllers/destroy', *args
 end

@@ -1,13 +1,16 @@
 require 'spec_helper'
 
-shared_examples 'controllers/update' do
+shared_examples 'controllers/update' do |model, resource, attributes, valid_traits, invalid_traits|
   describe '#update' do
     let(:update) { put :update, params, format: :json }
 
     context 'exists' do
-      let!(:count) { 7 }
+      let!(:count) { 3 }
       let!(:records) { FactoryGirl.create_list resource, count }
       let(:id) { model.first.id }
+
+      before { expect(model.count).to eq(count) }
+      after { expect(model.count).to eq(count) }
 
       context 'valid' do
         let(:params) { {'id'=>id,resource=>get_record_attributes(FactoryGirl.build(resource))} }
@@ -16,32 +19,21 @@ shared_examples 'controllers/update' do
           h['id'] = id
           h
         }
-        it do
-          expect(model.count).to eq(count)
 
-          update
+        it { update }
 
-          expect(response.status).to eq(200)
-          expect(json_response).to eq({resource.to_s => expected})
-
-          expect(model.count).to eq(count)
-        end
+        after { expect(json_response).to eq({resource => expected}) }
+        after { expect(response.status).to eq(200) }
       end
       context 'invalid' do
-        it do
-          invalid_factories.each do |trait|
-            expect(model.count).to eq(count)
+        invalid_traits.each do |trait|
+          let(:params) { {'id'=>id,resource=>get_record_attributes(FactoryGirl.build(resource,trait))} }
+          let(:expected) { get_record_errors(model, params[resource]) }
 
-            params   = {'id'=>id,resource=>get_record_attributes(FactoryGirl.build(resource,trait))}
-            expected = get_record_errors(model, params[resource])
+          it { update }
 
-            put :update, params, format: :json
-
-            expect(response.status).to eq(400)
-            expect(response.body).to eq(expected)
-
-            expect(model.count).to eq(count)
-          end
+          after { expect(response.body).to eq(expected) }
+          after { expect(response.status).to eq(400) }
         end
       end
     end

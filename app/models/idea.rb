@@ -1,7 +1,9 @@
 class Idea < ActiveRecord::Base
   default_scope { order('id') }
 
-  props = ModelProps.new(Idea, [Bodyable, Tradable], parents: [:Trade])
+  def self.props
+  	@props ||= ModelProps.new(Idea, [Bodyable, Tradable], parents: [:Trade])
+  end
 
   ATTRIBUTES     = props.attrs
   SAFE_PARAMS    = props.safe_params

@@ -1,6 +1,9 @@
 class Worker < ActiveRecord::Base
-  props = ModelProps.new(Worker, [Namable,Shopable,Tradable, Identifyable],
-    parents: [:Trade, :Shop])
+
+  def self.props
+    @props ||= ModelProps.new(Worker, [Namable,Shopable,Tradable, Identifyable],
+      parents: [:Trade, :Shop])
+  end
 
   ATTRIBUTES     = props.attrs
   SAFE_PARAMS    = props.safe_params

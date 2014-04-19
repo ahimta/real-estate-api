@@ -1,6 +1,9 @@
 class Shop < ActiveRecord::Base
-  props = ModelProps.new(Shop, [Tradable,Namable,Identifyable],
-    counter_caches: [:workers_count], parents: [:Trade])
+
+  def self.props
+    @props ||= ModelProps.new(Shop, [Tradable,Namable,Identifyable],
+      counter_caches: [:workers_count], parents: [:Trade])
+  end
 
   ATTRIBUTES     = props.attrs
   SAFE_PARAMS    = props.safe_params
