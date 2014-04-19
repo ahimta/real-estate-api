@@ -7,7 +7,10 @@ module SimpleCrudable
   end
 
   def index
-    render json: @model.page(params[:page]), status: 200
+    page = params[:page] || 1
+
+    render json: @model.page(params[:page]), meta:
+      {pagination: {page: page, count: @model.count}}
   end
 
   def show

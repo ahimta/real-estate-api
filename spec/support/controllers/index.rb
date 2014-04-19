@@ -26,12 +26,15 @@ shared_examples 'controllers/index' do
         case resource
         when :idea, :shop
           expect(json_response).to eq({"#{resource.to_s}s"=>expected_records,'meta'=>{'parents'=>
-            {'trades'=> JSON.parse(Trade.all.to_json)}}})
-        when :material, :worker
+            {'trades'=> JSON.parse(Trade.all.to_json)},
+            'pagination'=>{'page' => 1, 'count' => count}}})
+        when :worker
           expect(json_response).to eq({"#{resource.to_s}s"=>expected_records,'meta'=>{'parents'=>
-            {'trades'=>JSON.parse(Trade.all.to_json),'shops'=>JSON.parse(Shop.all.to_json)}}})
+            {'trades'=>JSON.parse(Trade.all.to_json),'shops'=>JSON.parse(Shop.all.to_json)},
+            'pagination'=>{'page' => 1, 'count' => count}}})
         else
-          expect(json_response).to eq({"#{resource.to_s}s" => expected_records})
+          expect(json_response).to eq({"#{resource.to_s}s" => expected_records,
+            'meta' => {'pagination' => {'page' => 1, 'count' => count}}})
         end
 
         expect(model.count).to eq(count)
