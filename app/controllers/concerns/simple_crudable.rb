@@ -3,6 +3,7 @@ module SimpleCrudable
 
   included do
     before_action :get_model
+    before_action :get_pagination
     before_action :get_record, only: [:show, :update, :destroy]
   end
 
@@ -10,7 +11,7 @@ module SimpleCrudable
     page = params[:page] || 1
 
     render json: @model.page(params[:page]), meta:
-      {pagination: {page: page, count: @model.count}}
+      {pagination: @pagination}
   end
 
   def show
@@ -44,7 +45,15 @@ module SimpleCrudable
 
   private
 
-  def get_record
-    @record ||= @model.find params[:id]
-  end
+    def get_record
+      @record ||= @model.find params[:id]
+    end
+
+    def get_pagination
+      page  = params[:page] || 1
+      count = @model.count
+      pages = (count / 10.0).ceil
+
+      @pagination ||= {page: page, count: count, per_page: 10, pages: pages}
+    end
 end

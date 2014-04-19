@@ -5,6 +5,6 @@ module ShopableController
   	page = params[:page] || 1
 
     render json: @model.page(page), meta: {parents: {trades: Trade.all, shops: Shop.all},
-      pagination: {page: page, count: @model.count}}
+      pagination: @pagination}
   end
 end
