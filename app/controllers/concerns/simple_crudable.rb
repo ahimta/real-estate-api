@@ -7,7 +7,7 @@ module SimpleCrudable
   end
 
   def index
-    render json: @model.all, status: 200
+    render json: @model.page(params[:page]), status: 200
   end
 
   def show

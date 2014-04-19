@@ -2,6 +2,6 @@ module ShopableController
   extend ActiveSupport::Concern
 
   def index
-    render json: get_model.all, meta: {parents: {trades: Trade.all, shops: Shop.all}}
+    render json: get_model.page(params[:page]), meta: {parents: {trades: Trade.all, shops: Shop.all}}
   end
 end
