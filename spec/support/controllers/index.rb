@@ -8,9 +8,10 @@ shared_examples 'controllers/index' do
     end
 
     context 'exist' do
-      let(:count) { 7 }
+      let(:count) { 3 }
       let(:expected_records) {
-        records.map { |record| get_record_attrs(record, attributes) }
+        rs = records.map { |record| get_record_attrs(record, attributes) }
+        rs.sort { |r1, r2| r1['name'] <=> r2['name'] }
       }
       let!(:records) { FactoryGirl.create_list resource, count }
 
