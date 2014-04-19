@@ -4,7 +4,7 @@ module ShopableController
   def index
   	page = params[:page] || 1
 
-    render json: get_model.page(page), meta: {parents: {trades: Trade.all, shops: Shop.all},
-      pagination: {page: page, count: get_model.count}}
+    render json: @model.page(page), meta: {parents: {trades: Trade.all, shops: Shop.all},
+      pagination: {page: page, count: @model.count}}
   end
 end
