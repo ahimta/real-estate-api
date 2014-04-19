@@ -16,6 +16,7 @@ end
 
 group :development do
   gem 'guard-rspec', '~> 4.2.8', require: false
+  gem 'guard-bundler', '~> 2.0.0', require: false
   gem 'railroady', '~> 1.1.1'
   gem 'spring'
   gem 'spring-commands-rspec'
