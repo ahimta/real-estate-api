@@ -1,6 +1,17 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
+
+  # phone
+  trait :with_phone do
+    sequence(:phone) { |n| "phone#{n}" }
+  end
+
+  trait :without_phone do
+    phone ''
+  end
+
+  # rating
   trait :without_rating do
     rating nil
   end
@@ -23,5 +34,14 @@ FactoryGirl.define do
 
   trait :with_invalid_high_rating do
     rating(6)
+  end
+
+  # notes
+  trait :with_notes do
+    sequence(:notes) { |n| "notes#{n}" }
+  end
+
+  trait :without_notes do
+    notes ''
   end
 end

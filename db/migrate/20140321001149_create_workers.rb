@@ -4,8 +4,6 @@ class CreateWorkers < ActiveRecord::Migration
       t.string :name, null: false
 
       t.string :phone
-      t.integer :lower_price, default: 0
-      t.integer :higher_price, default: 0
       t.integer :rating, default: 0
       t.text :notes
 

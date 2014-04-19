@@ -2,5 +2,5 @@
 
 FactoryGirl.define do
   factory :worker,
-    traits: [:with_name,:with_phone,:with_price,:with_notes,:with_rating,:with_trade,:with_shop]
+    traits: [:with_name,:with_phone,:with_notes,:with_rating,:with_trade,:with_shop]
 end

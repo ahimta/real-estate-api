@@ -1,5 +1,5 @@
 class Worker < ActiveRecord::Base
-  props = ModelProps.new(Worker, [Namable,Notable,Phonable,Priceble,Ratable,Shopable,Tradable],
+  props = ModelProps.new(Worker, [Namable,Notable,Phonable,Ratable,Shopable,Tradable],
     parents: [:Trade, :Shop])
 
   ATTRIBUTES     = props.attrs
