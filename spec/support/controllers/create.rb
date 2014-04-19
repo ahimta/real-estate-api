@@ -12,7 +12,7 @@ shared_examples 'controllers/create' do
 
           post :create, params, format: :json
 
-          record = model.first
+          record = model.unscoped.first
           expected_record = get_record_attrs(record, attributes)
 
           expect(response.status).to eq(201)
