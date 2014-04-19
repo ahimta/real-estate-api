@@ -1,5 +1,5 @@
 class Shop < ActiveRecord::Base
-  props = ModelProps.new(Shop, [Phonable,Tradable,Notable,Namable,Ratable],
+  props = ModelProps.new(Shop, [Tradable,Namable,Identifyable],
     counter_caches: [:workers_count], parents: [:Trade])
 
   ATTRIBUTES     = props.attrs
