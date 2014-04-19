@@ -15,7 +15,7 @@ shared_examples 'controllers/destroy' do
       let!(:records) { FactoryGirl.create_list resource, count }
 
       let(:record) { model.last }
-      let(:count) { 7 }
+      let(:count) { 3 }
 
       let(:expected_record) { get_record_attrs(record, attributes) }
 
