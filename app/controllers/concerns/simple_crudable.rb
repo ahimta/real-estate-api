@@ -3,7 +3,7 @@ module SimpleCrudable
 
   included do
     before_action :get_model
-    before_action :get_pagination
+    before_action :get_pagination, only: :index
     before_action :get_record, only: [:show, :update, :destroy]
   end
 
@@ -50,9 +50,11 @@ module SimpleCrudable
     end
 
     def get_pagination
-      page  = params[:page] || 1
       count = @model.count
       pages = (count / 10.0).ceil
+      page  = params[:page] || 1
+
+      raise ActiveRecord::RecordNotFound if page > pages and count > 0
 
       @pagination ||= {page: page, count: count, per_page: 10, pages: pages}
     end
