@@ -6,6 +6,6 @@ class Api::V1::TradesController < ApplicationController
   end
 
   def safe_params
-    params.require(:trade).permit Trade::SAFE_PARAMS
+    params.require(:trade).permit Trade.props.safe_params
   end
 end

@@ -1,3 +1,3 @@
 class ShopSerializer < ActiveModel::Serializer
-  attributes *(Shop::ATTRIBUTES)
+  attributes *Shop.props.attrs
 end

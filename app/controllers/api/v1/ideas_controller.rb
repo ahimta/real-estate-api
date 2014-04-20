@@ -7,6 +7,6 @@ class Api::V1::IdeasController < ApplicationController
   end
 
   def safe_params
-    params.require(:idea).permit Idea::SAFE_PARAMS
+    params.require(:idea).permit Idea.props.safe_params
   end
 end

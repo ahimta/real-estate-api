@@ -7,6 +7,6 @@ class Api::V1::WorkersController < ApplicationController
   end
 
   def safe_params
-    params.require(:worker).permit Worker::SAFE_PARAMS
+    params.require(:worker).permit Worker.props.safe_params
   end
 end

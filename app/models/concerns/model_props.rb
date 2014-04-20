@@ -1,5 +1,5 @@
 class ModelProps
-  attr_reader :safe_params, :valid_traits, :invalid_traits, :attrs
+  attr_reader :safe_params, :valid_traits, :invalid_traits, :attrs, :counter_caches
 
   def initialize(model, mixins, options={})
 

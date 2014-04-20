@@ -7,6 +7,6 @@ class Api::V1::ShopsController < ApplicationController
   end
 
   def safe_params
-    params.require(:shop).permit Shop::SAFE_PARAMS
+    params.require(:shop).permit Shop.props.safe_params
   end
 end

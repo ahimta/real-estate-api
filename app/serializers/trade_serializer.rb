@@ -1,3 +1,3 @@
 class TradeSerializer < ActiveModel::Serializer
-  attributes *(Trade::ATTRIBUTES)
+  attributes *Trade.props.attrs
 end

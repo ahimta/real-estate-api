@@ -1,3 +1,3 @@
 class WorkerSerializer < ActiveModel::Serializer
-  attributes *(Worker::ATTRIBUTES)
+  attributes *Worker.props.attrs
 end
