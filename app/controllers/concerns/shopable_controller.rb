@@ -3,8 +3,10 @@ module ShopableController
 
   def index
   	page = params[:page] || 1
+  	trades = Trade.select(:id, :name, *Trade.props.counter_caches)
+  	shops  = Shop.select(:id, :name, *Shop.props.counter_caches)
 
-    render json: @model.page(page), meta: {parents: {trades: Trade.all, shops: Shop.all},
+    render json: @model.page(page), meta: {parents: {trades: trades, shops: shops},
       pagination: @pagination}
   end
 end

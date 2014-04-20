@@ -4,7 +4,7 @@ class ModelProps
   def initialize(model, mixins, options={})
 
     parents = options[:parents] || []
-    counter_caches = options[:counter_caches] || []
+    @counter_caches = options[:counter_caches] || []
     attrs = options[:attrs] || []
     valid_traits = options[:valid_traits] || []
     invalid_traits = options[:invalid_traits] || []

@@ -36,11 +36,11 @@ shared_examples 'controllers/index' do |model, resource, attributes, valid_trait
           case resource
           when 'idea', 'shop'
             expect(json_response).to eq({"#{resource}s"=>expected_records,'meta'=>{'parents'=>
-              {'trades'=> JSON.parse(Trade.all.to_json)},
+              {'trades'=> JSON.parse(Trade.select(:id, :name, *Trade.props.counter_caches).to_json)},
               'pagination'=> pagination}})
           when 'worker'
             expect(json_response).to eq({"#{resource}s"=>expected_records,'meta'=>{'parents'=>
-              {'trades'=>JSON.parse(Trade.all.to_json),'shops'=>JSON.parse(Shop.all.to_json)},
+              {'trades'=>JSON.parse(Trade.select(:id, :name, *Trade.props.counter_caches).to_json),'shops'=>JSON.parse(Shop.select(:id, :name, *Shop.props.counter_caches).to_json)},
               'pagination'=> pagination}})
           else
             expect(json_response).to eq({"#{resource}s" => expected_records,
@@ -62,11 +62,11 @@ shared_examples 'controllers/index' do |model, resource, attributes, valid_trait
             case resource
             when 'idea', 'shop'
               expect(json_response).to eq({"#{resource}s"=>expected_records.take(10),'meta'=>{'parents'=>
-                {'trades'=> JSON.parse(Trade.all.to_json)},
+                {'trades'=> JSON.parse(Trade.select(:id, :name, *Trade.props.counter_caches).to_json)},
                 'pagination'=> pagination}})
             when 'worker'
               expect(json_response).to eq({"#{resource}s"=>expected_records.take(10),'meta'=>{'parents'=>
-                {'trades'=>JSON.parse(Trade.all.to_json),'shops'=>JSON.parse(Shop.all.to_json)},
+                {'trades'=>JSON.parse(Trade.select(:id, :name, *Trade.props.counter_caches).to_json),'shops'=>JSON.parse(Shop.select(:id, :name, *Shop.props.counter_caches).to_json)},
                 'pagination'=> pagination}})
             else
               expect(json_response).to eq({"#{resource}s" => expected_records.take(10),
@@ -84,11 +84,11 @@ shared_examples 'controllers/index' do |model, resource, attributes, valid_trait
             case resource
             when 'idea', 'shop'
               expect(json_response).to eq({"#{resource}s"=>expected_records.drop(10).take(10),'meta'=>{'parents'=>
-                {'trades'=> JSON.parse(Trade.all.to_json)},
+                {'trades'=> JSON.parse(Trade.select(:id, :name, *Trade.props.counter_caches).to_json)},
                 'pagination'=> pagination}})
             when 'worker'
               expect(json_response).to eq({"#{resource}s"=>expected_records.drop(10).take(10),'meta'=>{'parents'=>
-                {'trades'=>JSON.parse(Trade.all.to_json),'shops'=>JSON.parse(Shop.all.to_json)},
+                {'trades'=>JSON.parse(Trade.select(:id, :name, *Trade.props.counter_caches).to_json),'shops'=>JSON.parse(Shop.select(:id, :name, *Shop.props.counter_caches).to_json)},
                 'pagination'=> pagination}})
             else
               expect(json_response).to eq({"#{resource}s" => expected_records.drop(10).take(10),
@@ -106,11 +106,11 @@ shared_examples 'controllers/index' do |model, resource, attributes, valid_trait
             case resource
             when 'idea', 'shop'
               expect(json_response).to eq({"#{resource}s"=>expected_records.drop(20).take(10),'meta'=>{'parents'=>
-                {'trades'=> JSON.parse(Trade.all.to_json)},
+                {'trades'=> JSON.parse(Trade.select(:id, :name, *Trade.props.counter_caches).to_json)},
                 'pagination'=> pagination}})
             when 'worker'
               expect(json_response).to eq({"#{resource}s"=>expected_records.drop(20).take(10),'meta'=>{'parents'=>
-                {'trades'=>JSON.parse(Trade.all.to_json),'shops'=>JSON.parse(Shop.all.to_json)},
+                {'trades'=>JSON.parse(Trade.select(:id, :name, *Trade.props.counter_caches).to_json),'shops'=>JSON.parse(Shop.select(:id, :name, *Shop.props.counter_caches).to_json)},
                 'pagination'=> pagination}})
             else
               expect(json_response).to eq({"#{resource}s" => expected_records.drop(20).take(10),
