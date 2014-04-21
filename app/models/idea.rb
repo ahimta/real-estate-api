@@ -1,4 +1,5 @@
 class Idea < ActiveRecord::Base
+
   default_scope { order('id') }
 
   def self.props

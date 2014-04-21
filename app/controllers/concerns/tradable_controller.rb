@@ -5,7 +5,7 @@ module TradableController
   	page   = params[:page] || 1
   	trades = Trade.select(:id, :name, *Trade.props.counter_caches)
 
-    render json: @model.page(params[:page]), meta: {parents: {trades: trades},
+    render json: @model.page(page), meta: {parents: {trades: trades},
       pagination: @pagination}
   end
 end

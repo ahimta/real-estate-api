@@ -2,7 +2,7 @@ module ShopableController
   extend ActiveSupport::Concern
 
   def index
-  	page = params[:page] || 1
+  	page   = params[:page] || 1
   	trades = Trade.select(:id, :name, *Trade.props.counter_caches)
   	shops  = Shop.select(:id, :name, *Shop.props.counter_caches)
 
