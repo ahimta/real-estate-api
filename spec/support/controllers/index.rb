@@ -14,10 +14,35 @@ shared_examples 'controllers/index' do |model, resource, attributes, valid_trait
     end
 
     context 'exist' do
-      let(:expected_records) {
+      let(:tradables) {
+        {"#{resource}s"=>expected_records,'meta'=>{'parents'=>
+          {'trades'=> JSON.parse(Trade.select(:id, :name, *Trade.props.counter_caches).to_json)},
+          'pagination'=> pagination}}
+      }
+      let(:shopables) {
+        {"#{resource}s"=>expected_records,'meta'=>{'parents'=>
+          {'trades'=>JSON.parse(Trade.select(:id, :name, *Trade.props.counter_caches).to_json),
+          'shops'=>JSON.parse(Shop.select(:id, :name, *Shop.props.counter_caches).to_json)},
+          'pagination'=> pagination}}
+      }
+      let(:otherables) {{"#{resource}s" => expected_records, 'meta' => {'pagination' => pagination}}}
+      let(:per_page) { Kaminari.config.default_per_page }
+      let(:all_records) {
         rs = records.map { |record| get_record_attrs(record, attributes) }
         rs.sort { |a, b| a['name'] <=> b['name'] }
       }
+      let(:test!) {
+        case resource
+        when 'idea', 'shop'
+          expect(json_response).to eq(tradables)
+        when 'worker'
+          expect(json_response).to eq(shopables)
+        else
+          expect(json_response).to eq(otherables)
+        end
+      }
+      let(:pagination) { {'page' => page, 'count' => count, 'per_page' => per_page, 'pages' => pages} }
+      let(:pages) { (count / per_page.to_f).ceil }
 
       before { expect(model.count).to be_zero }
 
@@ -26,101 +51,73 @@ shared_examples 'controllers/index' do |model, resource, attributes, valid_trait
 
       context 'one page' do
         let!(:records) { FactoryGirl.create_list resource, count }
+        let(:expected_records) { all_records.take per_page }
         let(:count) { 3 }
+        let(:page) { 1 }
 
-        it { index }
+        context 'valid' do
+          after { test! }
 
-        after do
-          pagination = {'page' => 1, 'count' => count, 'per_page' => 10, 'pages' => 1}
+          context 'without page parameter' do
+            it { index }
+          end
+          context 'with page parameter' do
+            it { get :index, page: 1, format: :json }
+          end
+        end
 
-          case resource
-          when 'idea', 'shop'
-            expect(json_response).to eq({"#{resource}s"=>expected_records,'meta'=>{'parents'=>
-              {'trades'=> JSON.parse(Trade.select(:id, :name, *Trade.props.counter_caches).to_json)},
-              'pagination'=> pagination}})
-          when 'worker'
-            expect(json_response).to eq({"#{resource}s"=>expected_records,'meta'=>{'parents'=>
-              {'trades'=>JSON.parse(Trade.select(:id, :name, *Trade.props.counter_caches).to_json),'shops'=>JSON.parse(Shop.select(:id, :name, *Shop.props.counter_caches).to_json)},
-              'pagination'=> pagination}})
-          else
-            expect(json_response).to eq({"#{resource}s" => expected_records,
-              'meta' => {'pagination' => pagination}})
+        context 'invalid' do
+          let(:test!) {
+            expect {get :index,page:page,format: :json}.to raise_error(ActiveRecord::RecordNotFound)
+          }
+
+          context 'negative page' do
+            let(:page) { -1 }
+            it { test! }
+          end
+          context 'zero page' do
+            let(:page) { 0 }
+            it { test! }
+          end
+          context 'out of bound page' do
+            let(:page) { 2 }
+            it { test! }
           end
         end
       end
 
-      context 'multiple' do
+      context 'more than one page' do
         let!(:records) { FactoryGirl.create_list resource, count }
         let(:count) { 21 }
 
-        context 'first page' do
-          it { index }
+        context 'valid' do
+          after { test! }
 
-          after do
-            pagination = {'page' => 1, 'count' => count, 'per_page' => 10, 'pages' => 3}
+          context 'first page' do
+            let(:expected_records) { all_records.take per_page }
+            let(:page) { 1 }
 
-            case resource
-            when 'idea', 'shop'
-              expect(json_response).to eq({"#{resource}s"=>expected_records.take(10),'meta'=>{'parents'=>
-                {'trades'=> JSON.parse(Trade.select(:id, :name, *Trade.props.counter_caches).to_json)},
-                'pagination'=> pagination}})
-            when 'worker'
-              expect(json_response).to eq({"#{resource}s"=>expected_records.take(10),'meta'=>{'parents'=>
-                {'trades'=>JSON.parse(Trade.select(:id, :name, *Trade.props.counter_caches).to_json),'shops'=>JSON.parse(Shop.select(:id, :name, *Shop.props.counter_caches).to_json)},
-                'pagination'=> pagination}})
-            else
-              expect(json_response).to eq({"#{resource}s" => expected_records.take(10),
-                'meta' => {'pagination' => pagination}})
+            context 'without a page parameter' do
+              it { index }
+            end
+            context 'with a page parameter' do
+              it { get :index, page: 1, format: :json }
             end
           end
-        end
 
-        context 'second page' do
-          it { get :index, page: 2, format: :json }
+          context 'second page' do
+            let(:expected_records) { all_records.drop(per_page).take(per_page) }
+            let(:page) { 2 }
 
-          after do
-            pagination = {'page' => 2, 'count' => count, 'per_page' => 10, 'pages' => 3}
-
-            case resource
-            when 'idea', 'shop'
-              expect(json_response).to eq({"#{resource}s"=>expected_records.drop(10).take(10),'meta'=>{'parents'=>
-                {'trades'=> JSON.parse(Trade.select(:id, :name, *Trade.props.counter_caches).to_json)},
-                'pagination'=> pagination}})
-            when 'worker'
-              expect(json_response).to eq({"#{resource}s"=>expected_records.drop(10).take(10),'meta'=>{'parents'=>
-                {'trades'=>JSON.parse(Trade.select(:id, :name, *Trade.props.counter_caches).to_json),'shops'=>JSON.parse(Shop.select(:id, :name, *Shop.props.counter_caches).to_json)},
-                'pagination'=> pagination}})
-            else
-              expect(json_response).to eq({"#{resource}s" => expected_records.drop(10).take(10),
-                'meta' => {'pagination' => pagination}})
-            end
+            it { get :index, page: 2, format: :json }
           end
-        end
 
-        context 'third page' do
-          it { get :index, page: 3, format: :json }
+          context 'third page' do
+            let(:expected_records) { all_records.drop(per_page*2).take(per_page) }
+            let(:page) { 3 }
 
-          after do
-            pagination = {'page' => 3, 'count' => count, 'per_page' => 10, 'pages' => 3}
-
-            case resource
-            when 'idea', 'shop'
-              expect(json_response).to eq({"#{resource}s"=>expected_records.drop(20).take(10),'meta'=>{'parents'=>
-                {'trades'=> JSON.parse(Trade.select(:id, :name, *Trade.props.counter_caches).to_json)},
-                'pagination'=> pagination}})
-            when 'worker'
-              expect(json_response).to eq({"#{resource}s"=>expected_records.drop(20).take(10),'meta'=>{'parents'=>
-                {'trades'=>JSON.parse(Trade.select(:id, :name, *Trade.props.counter_caches).to_json),'shops'=>JSON.parse(Shop.select(:id, :name, *Shop.props.counter_caches).to_json)},
-                'pagination'=> pagination}})
-            else
-              expect(json_response).to eq({"#{resource}s" => expected_records.drop(20).take(10),
-                'meta' => {'pagination' => pagination}})
-            end
+            it { get :index, page: 3, format: :json }
           end
-        end
-
-        context 'fourth page' do
-          it { expect {get :index, page: 4, format: :json}.to raise_error(ActiveRecord::RecordNotFound) }
         end
       end
     end

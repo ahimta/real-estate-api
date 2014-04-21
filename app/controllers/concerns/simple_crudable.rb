@@ -8,8 +8,6 @@ module SimpleCrudable
   end
 
   def index
-    page = params[:page] || 1
-
     render json: @model.page(params[:page]), meta:
       {pagination: @pagination}
   end
@@ -50,12 +48,13 @@ module SimpleCrudable
     end
 
     def get_pagination
-      count = @model.count
-      pages = (count / 10.0).ceil
-      page  = params[:page] || 1
+      per_page = Kaminari.config.default_per_page
+      count    = @model.count
+      pages    = (count / per_page.to_f).ceil
+      page     = params[:page] || 1
 
-      raise ActiveRecord::RecordNotFound if page > pages and count > 0
+      raise ActiveRecord::RecordNotFound if (page < 1) or (page > pages and count > 0)
 
-      @pagination ||= {page: page, count: count, per_page: 10, pages: pages}
+      @pagination ||= {page: page, count: count, per_page: per_page, pages: pages}
     end
 end
