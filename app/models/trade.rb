@@ -1,8 +1,10 @@
 class Trade < ActiveRecord::Base
 
+  @props = ModelProps.new(Trade, [Namable],
+    counter_caches: [:ideas_count,:shops_count,:workers_count])
+
   def self.props
-    @props ||= ModelProps.new(Trade, [Namable],
-      counter_caches: [:ideas_count,:shops_count,:workers_count])
+    @props
   end
 
   has_many :ideas, dependent: :destroy
