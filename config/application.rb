@@ -30,7 +30,7 @@ module RealEState
     config.middleware.use Rack::Cors do
       allow do
         origins '*'
-        resource '*', headers: :any, methods: :any
+        resource '*', headers: :any, methods: [:get, :post, :delete, :put, :options]
       end
     end
   end
