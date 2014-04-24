@@ -51,7 +51,7 @@ module SimpleCrudable
       per_page = Kaminari.config.default_per_page
       count    = @model.count
       pages    = (count / per_page.to_f).ceil
-      page     = params[:page] || 1
+      page     = (params[:page] || 1).to_i
 
       raise ActiveRecord::RecordNotFound if (page < 1) or (page > pages and count > 0)
 

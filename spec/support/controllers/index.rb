@@ -101,7 +101,7 @@ shared_examples 'controllers/index' do |model, resource, attributes, valid_trait
               it { index }
             end
             context 'with a page parameter' do
-              it { get :index, page: 1, format: :json }
+              it { get :index, page: '1', format: :json }
             end
           end
 
