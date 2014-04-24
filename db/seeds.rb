@@ -8,7 +8,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 Trade.destroy_all
 
-5.times do |i|
+21.times do |i|
   i += 1
 
   trade = Trade.create! name: "Trade#{i}"
