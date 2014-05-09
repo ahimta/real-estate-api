@@ -24,9 +24,7 @@ class ModelProps
   private
 
   def include_mixins(mixins)
-    @model.class_eval do
-      mixins.each { |mixin| include mixin }
-    end
+    mixins.each { |mixin| @model.include mixin }
   end
 
   def ref_intgerify(mixins, parents)
