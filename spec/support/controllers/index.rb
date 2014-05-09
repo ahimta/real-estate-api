@@ -28,8 +28,9 @@ shared_examples 'controllers/index' do |model, resource, attributes, valid_trait
       let(:otherables) {{"#{resource}s" => expected_records, 'meta' => {'pagination' => pagination}}}
       let(:per_page) { Kaminari.config.default_per_page }
       let(:all_records) {
-        rs = records.map { |record| get_record_attrs(record, attributes) }
-        rs.sort { |a, b| a['name'] <=> b['name'] }
+        persisted = records.sort { |r1, r2| r2.id <=> r1.id }
+        rs = persisted.map { |record| get_record_attrs(record, attributes) }
+        rs
       }
       let(:test!) {
         case resource

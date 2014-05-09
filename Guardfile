@@ -7,7 +7,7 @@ guard :rspec, cmd: 'bin/spring rspec' do
   watch('spec/spec_helper.rb')  { "spec" }
   
   # my rules
-  watch(%r{^app/models/(.+)\.rb$})                    { |m| ["spec/models/#{m[1]}_spec.rb", "spec/controllers/#{m[1]}s_controller_spec.rb"] }
+  watch(%r{^app/models/(.+)\.rb$})                    { |m| ["spec/models/#{m[1]}_spec.rb", "spec/controllers/api/v1/#{m[1]}s_controller_spec.rb"] }
   watch(%r{^app/.+/concerns/.+\.rb$})                 { |m| 'spec' }
   watch(%r{^config/.*$})                              { |m| 'spec' }
   watch(%r{^spec/factories/.*$})                      { |m| 'spec' }
