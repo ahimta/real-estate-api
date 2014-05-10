@@ -61,7 +61,9 @@ module SimpleCrudable
 
     def get_parameters
       @model.props.attrs.each do |attribute|
-        @model = @model.where attribute => params[attribute] if params[attribute] and attribute != :id
+        if attribute != :id and params[attribute]
+          @model = @model.where attribute => params[attribute]
+        end
       end
     end
 end
