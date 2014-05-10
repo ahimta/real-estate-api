@@ -3,6 +3,7 @@ module SimpleCrudable
 
   included do
     before_action :get_model
+    before_action :get_parameters
     before_action :get_pagination, only: :index
     before_action :get_record, only: [:show, :update, :destroy]
   end
@@ -56,5 +57,11 @@ module SimpleCrudable
       raise ActiveRecord::RecordNotFound if (page < 1) or (page > pages and count > 0)
 
       @pagination ||= {page: page, count: count, per_page: per_page, pages: pages}
+    end
+
+    def get_parameters
+      @model.props.attrs.each do |attribute|
+        @model = @model.where attribute => params[attribute] if params[attribute] and attribute != :id
+      end
     end
 end

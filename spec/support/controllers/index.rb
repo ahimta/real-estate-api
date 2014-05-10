@@ -41,6 +41,7 @@ shared_examples 'controllers/index' do |model, resource, attributes, valid_trait
 
       before { expect(model.count).to be_zero }
 
+      it { get :index, trade_id: rand(100), shop_id: rand(100) }
       it { get :index, page: page, format: :json }
       it { index }
 
@@ -50,6 +51,8 @@ shared_examples 'controllers/index' do |model, resource, attributes, valid_trait
     end
 
     context 'exist' do
+
+
       before { expect(model.count).to be_zero }
 
       after { expect(response.status).to eq(200) }
@@ -86,7 +89,7 @@ shared_examples 'controllers/index' do |model, resource, attributes, valid_trait
             it { test! }
           end
           context 'out of bound page' do
-            let(:page) { 2 }
+            let(:page) { pages.succ }
             it { test! }
           end
         end
@@ -125,6 +128,36 @@ shared_examples 'controllers/index' do |model, resource, attributes, valid_trait
             it { get :index, page: 3, format: :json }
           end
         end
+      end
+
+      context 'with filter prameters' do
+        let!(:records) { FactoryGirl.create_list resource, count }
+        let(:expected_records) do
+          all_records.select do |record|
+            params.inject(true) do |acc, k, v|
+              k == :format or acc and record[k.to_s] == v
+            end
+          end
+        end
+        let(:record) { all_records[count/2] }
+        let(:params) {
+          case resource
+          when 'idea'
+            {body: record['body'], trade_id: record['trade_id'], format: :json}
+          when 'worker', 'shop'
+            {name: record['name'], trade_id: record['trade_id'], format: :json }
+          when 'trade'
+            {name: record['name'], format: :json }
+          end
+        }
+        let(:page) { 1 }
+
+        #HACK
+        let(:count) { 1 }
+
+        it { get :index, params }
+
+        after { test! }
       end
     end
   end
