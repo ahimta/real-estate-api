@@ -3,7 +3,7 @@ module SimpleCrudable
 
   included do
     before_action :get_model
-    before_action :get_parameters
+    before_action :get_parameters, only: :index
     before_action :get_pagination, only: :index
     before_action :get_record, only: [:show, :update, :destroy]
   end
