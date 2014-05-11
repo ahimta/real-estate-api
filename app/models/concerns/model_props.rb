@@ -39,6 +39,6 @@ class ModelProps
   end
 
   def my_reduce(attr)
-    @mixins.reduce([]) { |acc, mixin| acc + eval("mixin::#{attr}") }
+    @mixins.reduce([]) { |acc, mixin| acc + mixin.const_get(attr) }
   end
 end
