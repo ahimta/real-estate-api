@@ -28,13 +28,14 @@ class ModelProps
   end
 
   def ref_intgerify(mixins, parents)
-    @model.class_eval do
-      parents.each do |parent|
-        validates "#{parent.to_s.downcase}_id".to_sym, presence: true,
-          inclusion: { in: ->(record) {parent.to_s.constantize.ids} }
+    parents.each do |parent|
+      parent = parent.to_s
+      parent_model = parent.constantize
 
-        belongs_to parent.to_s.downcase.to_sym, touch: true, counter_cache: true
-      end
+      @model.validates "#{parent.downcase}_id", presence: true,
+        inclusion: { in: ->(record) {parent_model.ids} }
+
+      @model.belongs_to parent.to_s.downcase.to_sym, touch: true, counter_cache: true
     end
   end
 
