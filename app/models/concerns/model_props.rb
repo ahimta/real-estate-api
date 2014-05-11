@@ -21,25 +21,26 @@ class ModelProps
     include_mixins mixins
   end
 
+
   private
 
-  def include_mixins(mixins)
-    mixins.each { |mixin| @model.include mixin }
-  end
-
-  def ref_intgerify(mixins, parents)
-    parents.each do |parent|
-      parent = parent.to_s
-      parent_model = parent.constantize
-
-      @model.validates "#{parent.downcase}_id", presence: true,
-        inclusion: { in: ->(record) {parent_model.ids} }
-
-      @model.belongs_to parent.to_s.downcase.to_sym, touch: true, counter_cache: true
+    def include_mixins(mixins)
+      @mixins.each { |mixin| @model.include mixin }
     end
-  end
 
-  def my_reduce(attr)
-    @mixins.reduce([]) { |acc, mixin| acc + mixin.const_get(attr) }
-  end
+    def ref_intgerify(mixins, parents)
+      parents.each do |parent|
+        parent = parent.to_s
+        parent_model = parent.constantize
+
+        @model.validates "#{parent.downcase}_id", presence: true,
+          inclusion: { in: ->(record) {parent_model.ids} }
+
+        @model.belongs_to parent.to_s.downcase.to_sym, touch: true, counter_cache: true
+      end
+    end
+
+    def my_reduce(attr)
+      @mixins.reduce([]) { |acc, mixin| acc + mixin.const_get(attr) }
+    end
 end
