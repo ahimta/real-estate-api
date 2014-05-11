@@ -1,0 +1,145 @@
+<div class="row">
+  <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-success btn-lg btn-block">{{ 'WORKERS.NEW' | translate }}</button>
+  <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <header class="modal-header">
+          <button type="button" ng-class="{'pull-right': !isArabic(), 'pull-left': isArabic()}" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+          <h4 id="myModalLabel" class="modal-title">{{ 'WORKERS.NEW' | translate }}</h4>
+        </header>
+        <div class="modal-body">
+          <form role="form" ng-submit="create(worker)">
+            <div ng-show="true">
+              <div ng-class="{'has-error': errors.trade_id}" class="form-group">
+                <select ng-model="worker.trade_id" placeholer="{{ 'TRADES.SINGLE' | translate }}" ng-options="t.id as t.name for t in trades" class="form-control"></select>
+                <div ng-if="errors.trade_id">
+                  <p ng-repeat="error in errors.trade_id" class="help-block">{{error}}</p>
+                </div>
+              </div>
+              <div ng-class="{'has-error': errors.shop_id}" class="form-group">
+                <select ng-model="worker.shop_id" placeholer="{{ 'SHOPS.SINGLE' | translate }}" ng-options="s.id as s.name for s in shops" class="form-control"></select>
+                <div ng-if="errors.shop_id">
+                  <p ng-repeat="error in errors.shop_id" class="help-block">{{error}}</p>
+                </div>
+              </div>
+              <div ng-show="true">
+                <div ng-class="{'has-error': errors.name}" class="form-group">
+                  <input type="text" autofocus="autofocus" required="required" placeholder="{{ 'NAME' | translate }}" ng-model="worker.name" class="form-control">
+                  <div ng-if="errors.name">
+                    <p ng-repeat="error in errors.name" class="help-block">{{error}}</p>
+                  </div>
+                </div>
+              </div>
+              <div ng-class="{'has-error': errors.phone}" class="form-group">
+                <input type="tel" placeholder="{{ 'PHONE' | translate }}" ng-model="worker.phone" class="form-control">
+                <div ng-if="errors.phone">
+                  <p ng-repeat="error in errors.phone" class="help-block">{{error}}</p>
+                </div>
+              </div>
+              <div ng-class="{'has-error': errors.rating}" class="form-group">
+                <rating value="worker.rating" isreadonly="false" max="5"></rating>
+                <div ng-if="errors.rating">
+                  <p ng-repeat="error in errors.rating" class="help-block">{{error}}</p>
+                </div>
+              </div>
+              <div ng-class="{'has-error': errors.notes}" class="form-group">
+                <textarea ng-model="worker.notes" placeholder="{{ 'NOTES' | translate }}" class="form-control"></textarea>
+                <div ng-if="errors.notes">
+                  <p ng-repeat="error in errors.notes" class="help-block">{{error}}</p>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg btn-block">{{ 'WORKERS.NEW' | translate }}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+<div ng-show="!workers" class="text-center progress progress-striped active">
+  <div role="progressbar" aria-valuenow="99" aria-valuemin="0" aria-valuemax="100" style="width: 100%" class="progress-bar"><span class="sr-only">Pending</span></div>
+</div>
+<section ng-hide="!workers">
+  <div class="row">
+    <section class="col-sm-3">
+      <div dir="ltr" class="list-group"><a ng-repeat="trade in trades | orderBy:'name'" ng-click="selectTrade(trade.id)" ng-href="#/workers?trade_id={{trade.id}}" ng-class="{active: isTradeSelected(trade.id)}" class="list-group-item">{{trade.name}}<span class="badge pull-right">{{trade.workers_count}}</span></a></div>
+      <hr>
+      <div dir="ltr" class="list-group"><a ng-repeat="shop in shops | orderBy:'name'" ng-click="selectShop(shop.id)" ng-href="#/workers?shop_id={{shop.id}}" ng-class="{active: isShopSelected(shop.id)}" class="list-group-item">{{shop.name}}<span class="badge pull-right">{{shop.workers_count}}</span></a></div>
+    </section>
+    <section class="col-sm-9">
+      <article ng-repeat="worker in workers" class="lead">
+        <div class="panel panel-primary">
+          <header class="panel-heading"><span ng-hide="isEditing(worker.id)"><span>{{worker.name }}</span></span>
+            <div ng-show="isEditing(worker.id)">
+              <div ng-class="{'has-error': errors.name}" class="form-group">
+                <input type="text" autofocus="autofocus" required="required" placeholder="{{ 'NAME' | translate }}" ng-model="worker.name" class="form-control">
+                <div ng-if="errors.name">
+                  <p ng-repeat="error in errors.name" class="help-block">{{error}}</p>
+                </div>
+              </div>
+            </div>
+          </header>
+          <div class="panel-body lead">
+            <div ng-show="isEditing(worker.id)">
+              <div ng-class="{'has-error': errors.trade_id}" class="form-group">
+                <select ng-model="worker.trade_id" placeholer="{{ 'TRADES.SINGLE' | translate }}" ng-options="t.id as t.name for t in trades" class="form-control"></select>
+                <div ng-if="errors.trade_id">
+                  <p ng-repeat="error in errors.trade_id" class="help-block">{{error}}</p>
+                </div>
+              </div>
+              <div ng-class="{'has-error': errors.shop_id}" class="form-group">
+                <select ng-model="worker.shop_id" placeholer="{{ 'SHOPS.SINGLE' | translate }}" ng-options="s.id as s.name for s in shops" class="form-control"></select>
+                <div ng-if="errors.shop_id">
+                  <p ng-repeat="error in errors.shop_id" class="help-block">{{error}}</p>
+                </div>
+              </div>
+              <div ng-class="{'has-error': errors.phone}" class="form-group">
+                <input type="tel" placeholder="{{ 'PHONE' | translate }}" ng-model="worker.phone" class="form-control">
+                <div ng-if="errors.phone">
+                  <p ng-repeat="error in errors.phone" class="help-block">{{error}}</p>
+                </div>
+              </div>
+              <div ng-class="{'has-error': errors.rating}" class="form-group">
+                <rating value="worker.rating" isreadonly="false" max="5"></rating>
+                <div ng-if="errors.rating">
+                  <p ng-repeat="error in errors.rating" class="help-block">{{error}}</p>
+                </div>
+              </div>
+              <div ng-class="{'has-error': errors.notes}" class="form-group">
+                <textarea ng-model="worker.notes" placeholder="{{ 'NOTES' | translate }}" class="form-control"></textarea>
+                <div ng-if="errors.notes">
+                  <p ng-repeat="error in errors.notes" class="help-block">{{error}}</p>
+                </div>
+              </div>
+            </div>
+            <div ng-hide="isEditing(worker.id)">
+              <p><span class="glyphicon glyphicon-earphone"></span><span> {{ worker.phone }}</span></p>
+              <rating value="worker.rating" readonly="true" max="5"></rating>
+              <hr>
+              <p>{{ worker.notes }}</p>
+            </div>
+          </div>
+          <footer class="panel-footer">
+            <div ng-hide="isEditing(worker.id)">
+              <button type="button" ng-click="edit(worker.id)" class="btn btn-primary">{{ 'EDIT' | translate }}</button>
+              <button type="button" ng-click="destroy(worker.id)" class="btn btn-danger">{{ 'DELETE' | translate }}</button>
+            </div>
+            <div ng-show="isEditing(worker.id)">
+              <button type="button" ng-click="reset(worker.id)" class="btn btn-success">{{ 'RESET' | translate }}</button>
+              <button type="button" ng-click="update(worker)" class="btn btn-primary">{{ 'SAVE' | translate }}</button>
+            </div>
+          </footer>
+        </div>
+      </article>
+      <div infinite-scroll="nextPage()" infinite-scroll-disabled="isLastPage()">
+        <p class="text-center">...</p>
+        <div ng-show="!isLastPage()" class="text-center progress progress-striped active">
+          <div role="progressbar" aria-valuenow="99" aria-valuemin="0" aria-valuemax="100" style="width: 100%" class="progress-bar"><span class="sr-only">Pending</span></div>
+        </div>
+        <section ng-hide="!isLastPage()">
+        </section>
+      </div>
+    </section>
+  </div>
+</section>
