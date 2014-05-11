@@ -27,11 +27,17 @@ module RealEState
     config.i18n.default_locale = :en
     config.i18n.enforce_available_locales = true
 
+    # rack-cors
     config.middleware.use Rack::Cors do
       allow do
         origins '*'
         resource '*', headers: :any, methods: [:get, :post, :delete, :put, :options]
       end
     end
+
+
+    # grape
+    config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb')
+    config.autoload_paths += Dir[Rails.root.join('app', 'api', '*')]
   end
 end
