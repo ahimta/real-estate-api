@@ -39,6 +39,6 @@ end
 
 gem 'rails-i18n', '~> 4.0.2'
 gem 'active_model_serializers', '~> 0.8.1'
-gem 'rack-cors', '~> 0.2.9', require: 'rack/cors'
+gem 'rack-cors', '~> 0.4.1', require: 'rack/cors'
 gem 'kaminari', '~> 0.15.1'
 gem 'grape', '~> 0.7.0'
